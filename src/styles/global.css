@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .mesh-bg {
+    background-color: hsla(244.85294117647055, 100%, 50%, 1);
+    background-image: radial-gradient(
+    circle at 50% -40%,
+    #020617 40%,
+    hsla(244, 100%, 20%, 1) 50%,
+    #020617 60%
+    );
+    background-blend-mode: normal;
+
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
