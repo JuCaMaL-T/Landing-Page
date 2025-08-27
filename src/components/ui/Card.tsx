@@ -10,18 +10,11 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ icon, title, description, href }) => {
   return (
-    <div className="relative rounded-2xl bg-gradient-to-br from-slate-700/40 via-slate-800/30 to-indigo-900/40 p-[1px] hover:from-indigo-600/40 hover:to-indigo-900/60 transition">
-      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg hover:shadow-xl transition flex flex-col justify-between">
-        {/* Icono */}
+    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-700/40 via-slate-800/30 to-indigo-900/40 p-[1px] hover:from-indigo-600/40 hover:to-indigo-900/60 transform transition-transform duration-300 hover:scale-105 h-full">
+      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg hover:shadow-xl transition flex flex-col justify-between h-full">
         <div className="mb-4">{icon}</div>
-
-        {/* Título */}
         <h2 className="text-lg font-semibold text-white mb-2">{title}</h2>
-
-        {/* Descripción */}
         <p className="text-sm text-gray-300 mb-6">{description}</p>
-
-        {/* Botón flecha */}
         {href && (
           <a
             href={href}

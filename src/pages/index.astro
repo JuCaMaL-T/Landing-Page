@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/layout.astro";
-import LandingPage from "../landing/pages/LandingPage";
+import LandingPage from "../components/react-pages/LandingPage";
 ---
 
 <Layout mesh={true}>
 	<LandingPage client:only="react" />
 	<LandingPage.Hero client:only="react" />
 	<LandingPage.Services client:only="react" />
+	<LandingPage.SoftwareLaunch client:only="react"/>
 </Layout>

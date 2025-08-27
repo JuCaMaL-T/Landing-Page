@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import MobileHeader from './MobileHeader';
 
 type Props = {};
 
@@ -17,8 +18,11 @@ const Header: FC<Props> = ({ }) => {
                 <a href="/contact" className="text-white hover:text-blue-900">Contactanos</a>
             </div>
 
-            <div>
+            <div className="hidden lg:block">
                 <a href="/login" className="bg-slate-900 text-white px-4 py-2 rounded hover:bg-indigo-900 border">Iniciar Sesión</a>
+            </div>
+            <div className="lg:hidden">
+                <MobileHeader/>
             </div>
         </div>
     );

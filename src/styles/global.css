@@ -4,14 +4,66 @@
   .mesh-bg {
     background-color: hsla(244.85294117647055, 100%, 50%, 1);
     background-image: radial-gradient(
-    circle at 50% -40%,
-    #020617 40%,
-    hsla(244, 100%, 20%, 1) 50%,
-    #020617 60%
+      circle 60vw at 50% calc(-20vh),
+      #020617 40%,
+      hsla(244, 100%, 20%, 1) 50%,
+      #020617 60%
     );
     background-blend-mode: normal;
-
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: contain;
+    background-position: center top;
+    min-height: 100vh;
+  }
+
+  /* Ajustes específicos para móvil */
+  @media (max-width: 768px) {
+    .mesh-bg {
+      background-image: radial-gradient(
+        circle 100vw at 50% -5vh,
+        #020617 35%,
+        hsla(244, 100%, 20%, 1) 50%,
+        #020617 65%
+      );
+      background-size: contain;
+    }
+  }
+
+  /* Ajustes para tablets */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .mesh-bg {
+      background-image: radial-gradient(
+        circle 100vw at 50% calc(-15vh),
+        #020617 40%,
+        hsla(244, 100%, 20%, 1) 50%,
+        #020617 60%
+      );
+      background-size: contain;
+    }
+  }
+
+  /* Pantallas muy pequeñas (smartphones en vertical) */
+  @media (max-width: 480px) {
+    .mesh-bg {
+      background-image: radial-gradient(
+        circle 100vw at 50% 0vh,
+        #020617 30%,
+        hsla(244, 100%, 20%, 1) 50%,
+        #020617 70%
+      );
+      background-size: contain;
+    }
+  }
+
+  /* Pantallas muy grandes (desktop) */
+  @media (min-width: 1400px) {
+    .mesh-bg {
+      background-image: radial-gradient(
+        circle 100vw at 50% calc(-25vh),
+        #020617 40%,
+        hsla(244, 100%, 20%, 1) 50%,
+        #020617 60%
+      );
+    }
   }
 }
