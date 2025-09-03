@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Header from "../components/layouts/Header.tsx";
+import Footer from "../components/layouts/Footer.tsx";
 const { children, mesh = false } = Astro.props;
 ---
 
@@ -23,5 +24,6 @@ const { children, mesh = false } = Astro.props;
 			<Header client:load/>
 				<slot />
 		)}
+		<Footer client:load/>
 	</body>
 </html>
