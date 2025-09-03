@@ -3,7 +3,7 @@ import Layout from "../layouts/layout.astro";
 import LandingPage from "../components/react-pages/LandingPage";
 ---
 
-<Layout mesh={true}>
+<Layout mesh={false}>
 	<LandingPage client:only="react" />
 	<LandingPage.Hero client:only="react" />
 	<LandingPage.Services client:only="react" />
