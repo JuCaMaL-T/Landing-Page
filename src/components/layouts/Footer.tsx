@@ -1,18 +1,22 @@
 import type { FC } from 'react';
-import { MapPin, Phone, Clock, Mail, Facebook, Instagram, Linkedin, Twitter, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Clock, Mail, Facebook, Instagram, Youtube, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
-type Props = {};
-
-const Footer: FC<Props> = ({ }) => {
+const Footer: FC = () => {
     return (
-        <footer className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden">
+        <motion.footer
+            initial={{ opacity: 0, y: 200 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden"
+        >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
 
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent"></div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-8">
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
 
                     <div className="lg:col-span-2 space-y-6">
@@ -123,8 +127,7 @@ const Footer: FC<Props> = ({ }) => {
                             {[
                                 { icon: Facebook, href: "#", label: "Facebook" },
                                 { icon: Instagram, href: "#", label: "Instagram" },
-                                { icon: Linkedin, href: "#", label: "LinkedIn" },
-                                { icon: Twitter, href: "#", label: "Twitter" }
+                                { icon: Youtube, href: "#", label: "Youtube" }
                             ].map((social, index) => (
                                 <a
                                     key={index}
@@ -148,7 +151,7 @@ const Footer: FC<Props> = ({ }) => {
                     </div>
                 </div>
             </div>
-        </footer>
+        </motion.footer>
     );
 };
 
