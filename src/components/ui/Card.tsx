@@ -1,26 +1,33 @@
 import type { FC, ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 
-interface CardProps {
-  icon: ReactNode;
+export interface CardProps {
+  icon: React.ElementType;
   title: string;
   description: string;
   href?: string;
+  iconClassName?: string;
 }
 
-const Card: FC<CardProps> = ({ icon, title, description, href }) => {
+const Card: FC<CardProps> = ({ icon: Icon, title, description, href, iconClassName= "w-12 h-12 text-indigo-400" }) => {
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-700/40 via-slate-800/30 to-indigo-900/40 p-[1px] hover:from-indigo-600/40 hover:to-indigo-900/60 transform transition-transform duration-300 hover:scale-105 h-full">
-      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg hover:shadow-xl transition flex flex-col justify-between h-full">
-        <div className="mb-4">{icon}</div>
-        <h2 className="text-lg font-semibold text-white mb-2">{title}</h2>
-        <p className="text-sm text-gray-300 mb-6">{description}</p>
+    <div className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-indigo-500/40 via-slate-700/20 to-purple-600/30 hover:from-indigo-600/60 hover:to-purple-700/40 shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 h-full">
+      <div className="bg-black/40 backdrop-blur-lg rounded-2xl p-8 h-full flex flex-col">
+        <div className="mb-6 transform transition-transform duration-300 group-hover:-translate-y-1">
+          <Icon className={iconClassName} />
+        </div>
+
+        <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+
+        <p className="text-gray-300 flex-grow">{description}</p>
+
         {href && (
           <a
             href={href}
-            className="w-10 h-10 flex items-center justify-center border border-gray-500 rounded-lg text-white hover:bg-white/10 transition"
+            className="mt-6 inline-flex items-center gap-2 text-indigo-400 font-medium group-hover:text-indigo-300 transition-colors"
           >
-            <ArrowRight className="w-5 h-5" />
+            Ver más
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
         )}
       </div>

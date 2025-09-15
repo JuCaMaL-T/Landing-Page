@@ -8,14 +8,13 @@ import { containerVariants, itemVariants } from "./Variants";
 const SoftwareLaunch: FC = () => {
   return (
     <motion.section
-      className="w-full min-h-screen text-white p-6 sm:p-10 rounded-2xl"
+      className="w-full h-auto text-white p-6 pb-16 sm:rounded-2xl"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}
       variants={containerVariants}
     >
       <div className="grid md:grid-cols-2 gap-10 items-center">
-        {/* Imagen */}
         <motion.div
           className="flex items-center justify-center border border-gray-600 rounded-2xl min-h-[240px] sm:min-h-[360px] md:min-h-[480px] relative overflow-hidden"
           variants={itemVariants}
@@ -28,16 +27,16 @@ const SoftwareLaunch: FC = () => {
           <img
             src="/Logo.png"
             alt="Vista previa del software"
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-3xl"
           />
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="uppercase tracking-widest text-xs sm:text-sm text-gray-400">
+          <p className="uppercase tracking-widest text-xs sm:text-sm text-indigo-400 mb-2">
             Nuevo
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3 leading-snug">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-snug">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">
               Nuestro Lanzamiento
             </span>{" "}
             Más Reciente
@@ -55,22 +54,26 @@ const SoftwareLaunch: FC = () => {
             {React.Children.map(
               [
                 <Card
-                  icon={<Rocket className="w-6 h-6 text-blue-400" />}
+                  icon={Rocket}
+                  iconClassName="w-6 h-6 text-blue-400"
                   title="Rendimiento Óptimo"
                   description="Optimizado para brindar la mejor experiencia en proyectos grandes."
                 />,
                 <Card
-                  icon={<Layers className="w-6 h-6 text-purple-400" />}
+                  icon={Layers}
+                  iconClassName="w-6 h-6 text-purple-400"
                   title="Gestión Modular"
                   description="Organiza los recursos de tu construcción en módulos fáciles de usar."
                 />,
                 <Card
-                  icon={<Cpu className="w-6 h-6 text-green-400" />}
+                  icon={Cpu}
+                  iconClassName="w-6 h-6 text-green-400"
                   title="Automatización"
                   description="Automatiza procesos repetitivos para ahorrar tiempo y reducir errores."
                 />,
                 <Card
-                  icon={<Shield className="w-6 h-6 text-red-400" />}
+                  icon={Shield}
+                  iconClassName="w-6 h-6 text-red-400"
                   title="Seguridad Avanzada"
                   description="Protección de datos y acceso seguro con cifrado de última generación."
                 />,
