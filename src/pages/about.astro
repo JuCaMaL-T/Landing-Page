@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/layout.astro";
+import AboutPage from "../components/react-pages/AboutPage";
+---
+
+<Layout>
+	<AboutPage client:only="react" />
+	<AboutPage.AboutHero client:only="react" />
+    <AboutPage.Team client:only="react" />
+    <AboutPage.Timeline client:only="react" />
+</Layout>
