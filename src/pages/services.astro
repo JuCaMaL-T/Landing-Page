@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/layout.astro";
+import ServicesPage from "../components/react-pages/ServicesPage";
+---
+
+<Layout>
+	<ServicesPage client:only="react" />
+	<ServicesPage.ServicesHero client:only="react" />
+	<ServicesPage.ServicesGrid client:only="react" />
+    <ServicesPage.WorkProcess client:only="react" />
+</Layout>

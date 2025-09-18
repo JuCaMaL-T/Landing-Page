@@ -5,6 +5,13 @@ import { motion } from "framer-motion";
 type Props = {};
 
 const Header: FC<Props> = ({}) => {
+  const links = [
+    { label: "Inicio", href: "/" },
+    { label: "Servicios", href: "/services" },
+    { label: "Nosotros", href: "/about" },
+    { label: "Contáctanos", href: "/contact" },
+  ];
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -23,34 +30,27 @@ const Header: FC<Props> = ({}) => {
       </a>
 
       <nav className="hidden lg:flex items-center space-x-10">
-        {["Inicio", "Servicios", "Nosotros", "Contáctanos"].map((link, i) => {
-          const href =
-            i === 0
-              ? "/"
-              : `/${link.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
-          return (
-            <a
-              key={link}
-              href={href}
-              className="relative text-white font-medium transition hover:text-indigo-400
-              after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px]
-              after:bg-indigo-400 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {link}
-            </a>
-          );
-        })}
+        {links.map(({ label, href }) => (
+          <a
+            key={label}
+            href={href}
+            className="relative text-white font-medium transition hover:text-indigo-400
+            after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px]
+            after:bg-indigo-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            {label}
+          </a>
+        ))}
       </nav>
 
       <div className="hidden lg:block">
-        <a
-        href="#"
-        className="relative px-6 py-2 font-medium text-white rounded-full 
-        bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 
-        transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30"
+        <div
+          className="group flex items-center justify-center gap-2 px-8 py-3 rounded-2xl 
+                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold 
+                    shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-indigo-500/40"
         >
-        Iniciar Sesión
-        </a>
+          <a href="/login">Iniciar Sesión</a>
+        </div>
       </div>
 
       <div className="lg:hidden">
