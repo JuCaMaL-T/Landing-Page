@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { milestones } from "../../data/about/AboutData";
 import TimelineItem from "../ui/TimelineItem";
-import { Clock, TrendingUp, Calendar } from "lucide-react";
+import { Clock } from "lucide-react";
 
 const Timeline: FC = () => {
   return (

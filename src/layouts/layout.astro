@@ -17,7 +17,8 @@ const { children, mesh = false } = Astro.props;
 	<body class="bg-slate-950 [&::-webkit-scrollbar]:hidden">
 		{mesh ? (
 		<div class="w-full relative">
-			<div class="mesh-bg absolute inset-0 -z-10"></div>
+			<div class="mesh-bg absolute inset-0 -z-10 hidden sm:block"></div>
+			<div class="meshmobile absolute inset-0 -z-10 block sm:hidden"></div>
 			<Header client:load/>
 				<slot />
 		</div>
