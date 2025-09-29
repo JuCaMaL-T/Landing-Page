@@ -6,6 +6,7 @@ export type TeamMember = {
   name: string;
   role: string;
   speciality: string;
+  image: string;
   bio: string;
   skills: string[];
   experience: string;
@@ -42,12 +43,12 @@ const TeamMemberCard: FC<TeamMemberCardProps> = ({ member, index }) => {
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="w-full h-full rounded-full bg-gray-700 flex items-center justify-center text-white text-2xl font-bold">
-                    {member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
+                  <div className="w-full h-full rounded-full bg-gray-800 overflow-hidden">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </motion.div>
 

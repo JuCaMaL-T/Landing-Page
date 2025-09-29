@@ -510,7 +510,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px; /* altura del fade */
+  height: 200px;
   background: linear-gradient(to bottom, transparent, #020617);
   pointer-events: none;
 }

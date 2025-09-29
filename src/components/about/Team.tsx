@@ -10,12 +10,12 @@ const Team: FC = () => {
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-20 right-1/4 w-40 h-40 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl"
+          className="absolute top-20 right-1/4 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-blue-700/10 rounded-full blur-2xl"
           animate={{ scale: [1, 1.3, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 15, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-32 left-1/3 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-2xl"
+          className="absolute bottom-32 left-1/3 w-48 h-48 bg-gradient-to-br from-blue-600/10 to-blue-900/10 rounded-full blur-2xl"
           animate={{ scale: [1.2, 0.8, 1.2], rotate: [0, -90, 0] }}
           transition={{ duration: 20, repeat: Infinity }}
         />
@@ -28,13 +28,13 @@ const Team: FC = () => {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <p className="text-sm tracking-widest text-purple-400 uppercase mb-5">
+        <p className="text-sm tracking-widest text-blue-500 uppercase mb-5">
           Nuestro Equipo
         </p>
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
           Las{" "}
-          <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
             Mentes Brillantes
           </span>{" "}
           Detrás de JUCAMAL
@@ -71,7 +71,7 @@ const Team: FC = () => {
         <div className="max-w-2xl mx-auto">
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
             ¿Quieres{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-blue-500 to-blue-900 text-transparent bg-clip-text">
               Unirte
             </span>{" "}
             a Nosotros?
@@ -83,7 +83,7 @@ const Team: FC = () => {
           </p>
           
           <motion.button
-            className="group flex items-center gap-3 px-8 py-4 mx-auto rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-purple-500/40"
+            className="group flex items-center gap-3 px-8 py-4 mx-auto rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
           >

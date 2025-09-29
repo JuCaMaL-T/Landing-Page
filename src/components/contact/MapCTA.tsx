@@ -1,0 +1,40 @@
+import type { FC } from "react";
+import { motion } from "framer-motion";
+
+const MapCTA: FC = () => {
+  return (
+    <motion.div
+      className="text-center mt-16 relative z-10"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, delay: 0.5 }}
+    >
+      <div className="max-w-2xl mx-auto">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+          ¿Necesitas{" "}
+          <span className="bg-gradient-to-r from-blue-500 to-blue-900 text-transparent bg-clip-text">
+            Reunirte
+          </span>{" "}
+          con Nosotros?
+        </h3>
+        
+        <p className="text-gray-300 mb-6">
+          Agenda una cita previa para garantizar que podamos dedicarte todo nuestro tiempo 
+          y atención. Nuestras oficinas están diseñadas para hacer de tu visita una experiencia cómoda.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-900 text-white font-medium hover:scale-105 transition-transform">
+            📅 Agendar Cita
+          </button>
+          <button className="flex items-center gap-2 px-6 py-3 rounded-xl border border-blue-500 text-blue-500 hover:bg-blue-500/10 transition-colors">
+            🚗 Ver Transporte Público
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default MapCTA;

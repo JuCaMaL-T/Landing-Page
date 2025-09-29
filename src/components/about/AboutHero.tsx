@@ -10,7 +10,7 @@ const AboutHero: FC = () => {
         <div className="flex w-full min-h-[85vh] px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-24 lg:py-32 relative overflow-hidden items-center justify-center">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div
-                    className="absolute top-16 left-12 w-3 h-3 bg-blue-400 rounded-full opacity-60"
+                    className="absolute top-16 left-12 w-3 h-3 bg-blue-500 rounded-full opacity-60"
                     animate={{ 
                         y: [0, -30, 0], 
                         opacity: [0.6, 1, 0.6],
@@ -19,7 +19,7 @@ const AboutHero: FC = () => {
                     transition={{ duration: 4, repeat: Infinity }}
                 />
                 <motion.div
-                    className="absolute top-32 right-16 w-2 h-2 bg-purple-400 rounded-full opacity-50"
+                    className="absolute top-32 right-16 w-2 h-2 bg-blue-600 rounded-full opacity-50"
                     animate={{ 
                         y: [0, -20, 0], 
                         opacity: [0.5, 0.9, 0.5],
@@ -28,7 +28,7 @@ const AboutHero: FC = () => {
                     transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
                 />
                 <motion.div
-                    className="absolute bottom-40 left-20 w-4 h-4 bg-cyan-400 rounded-full opacity-40"
+                    className="absolute bottom-40 left-20 w-4 h-4 bg-blue-700 rounded-full opacity-40"
                     animate={{ 
                         y: [0, -25, 0], 
                         opacity: [0.4, 0.8, 0.4],
@@ -37,7 +37,7 @@ const AboutHero: FC = () => {
                     transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
                 />
                 <motion.div
-                    className="absolute bottom-24 right-28 w-2 h-2 bg-green-400 rounded-full opacity-70"
+                    className="absolute bottom-24 right-28 w-2 h-2 bg-blue-800 rounded-full opacity-70"
                     animate={{ 
                         y: [0, -15, 0], 
                         opacity: [0.7, 1, 0.7],
@@ -47,7 +47,7 @@ const AboutHero: FC = () => {
                 />
 
                 <motion.div
-                    className="absolute top-1/3 right-1/4 w-8 h-8 border-2 border-blue-400/30 rounded-full"
+                    className="absolute top-1/3 right-1/4 w-8 h-8 border-2 border-blue-500/30 rounded-full"
                     animate={{ 
                         rotate: [0, 360],
                         scale: [1, 1.1, 1]
@@ -55,7 +55,7 @@ const AboutHero: FC = () => {
                     transition={{ duration: 8, repeat: Infinity }}
                 />
                 <motion.div
-                    className="absolute bottom-1/3 left-1/4 w-6 h-6 border-2 border-purple-400/30"
+                    className="absolute bottom-1/3 left-1/4 w-6 h-6 border-2 border-blue-600/30"
                     animate={{ 
                         rotate: [0, -360],
                         y: [0, -10, 0]
@@ -66,13 +66,13 @@ const AboutHero: FC = () => {
 
             <div className="flex flex-col items-center text-center max-w-6xl mx-auto w-full relative z-10">
                 <motion.div
-                    className="flex items-center gap-3 mb-8 px-5 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/40"
+                    className="flex items-center gap-3 mb-8 px-5 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 border border-blue-500/40"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <Heart className="w-5 h-5 text-pink-400" />
-                    <span className="text-blue-400 text-sm font-medium">Pasión por la Tecnología</span>
+                    <Heart className="w-5 h-5 text-blue-500" />
+                    <span className="text-blue-500 text-sm font-medium">Pasión por la Tecnología</span>
                 </motion.div>
 
                 <motion.h1
@@ -87,7 +87,7 @@ const AboutHero: FC = () => {
                             variants={textVariant}
                             className={
                                 word.includes("Nuestro")
-                                    ? "bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text"
+                                    ? "bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text"
                                     : ""
                             }
                         >
@@ -113,12 +113,12 @@ const AboutHero: FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 0.8 }}
                 >
-                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
+                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
                         <Users className="w-5 h-5 group-hover:animate-pulse" />
                         <span>Conocer al Equipo</span>
                     </button>
 
-                    <button className="group px-8 py-4 rounded-2xl border border-purple-400 text-white hover:bg-purple-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
+                    <button className="group px-8 py-4 rounded-2xl border border-blue-600 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
                         <span className="flex items-center gap-2">
                             <Rocket className="w-5 h-5 group-hover:translate-y-[-2px] transition-transform" />
                             Nuestra Historia
@@ -126,7 +126,6 @@ const AboutHero: FC = () => {
                     </button>
                 </motion.div>
 
-                {/* Stats destacados */}
                 <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-4xl"
                     initial={{ opacity: 0, y: 20 }}
@@ -135,7 +134,7 @@ const AboutHero: FC = () => {
                 >
                     <div className="text-center group">
                         <motion.div 
-                            className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-2"
+                            className="text-3xl sm:text-4xl font-extrabold text-blue-500 mb-2"
                             whileHover={{ scale: 1.1 }}
                         >
                             5
@@ -145,7 +144,7 @@ const AboutHero: FC = () => {
 
                     <div className="text-center group">
                         <motion.div 
-                            className="text-3xl sm:text-4xl font-extrabold text-pink-400 mb-2"
+                            className="text-3xl sm:text-4xl font-extrabold text-blue-700 mb-2"
                             whileHover={{ scale: 1.1 }}
                         >
                             100%
@@ -155,7 +154,7 @@ const AboutHero: FC = () => {
 
                     <div className="text-center group">
                         <motion.div 
-                            className="text-3xl sm:text-4xl font-extrabold text-cyan-400 mb-2"
+                            className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"
                             whileHover={{ scale: 1.1 }}
                         >
                             ∞

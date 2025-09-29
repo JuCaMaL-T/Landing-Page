@@ -8,12 +8,12 @@ const ServicesGrid: FC = () => {
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-xl"
+          className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-xl"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
           transition={{ duration: 20, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-40 left-20 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-xl"
+          className="absolute bottom-40 left-20 w-24 h-24 bg-gradient-to-br from-blue-600/10 to-blue-800/10 rounded-full blur-xl"
           animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
           transition={{ duration: 15, repeat: Infinity }}
         />
@@ -26,13 +26,13 @@ const ServicesGrid: FC = () => {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <p className="text-sm tracking-widest text-blue-400 uppercase mb-5">
+        <p className="text-sm tracking-widest text-blue-500 uppercase mb-5">
           Servicios Especializados
         </p>
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
           Transformamos Tu{" "}
-          <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
             Negocio
           </span>
         </h2>
@@ -63,17 +63,17 @@ const ServicesGrid: FC = () => {
               show: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-700/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500"
+            className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-blue-900/20 hover:from-blue-600/30 hover:to-blue-900/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500"
           >
             <div className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-lg rounded-3xl p-8 h-full flex flex-col relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/30 transform transition-transform duration-300 group-hover:-translate-y-1">
-                    <service.icon className="w-8 h-8 text-blue-400" />
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1">
+                    <service.icon className="w-8 h-8 text-blue-500" />
                   </div>
-                  <span className="text-xs text-blue-400 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30">
+                  <span className="text-xs text-blue-500 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
                     Popular
                   </span>
                 </div>
@@ -87,18 +87,18 @@ const ServicesGrid: FC = () => {
                 </p>
 
                 <div className="space-y-3 mb-8">
-                  <p className="text-sm font-semibold text-blue-400 mb-3">Incluye:</p>
+                  <p className="text-sm font-semibold text-blue-500 mb-3">Incluye:</p>
                   {service.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-green-500/20 to-blue-500/20 border border-green-400/40 flex items-center justify-center flex-shrink-0">
-                        <Check className="w-3 h-3 text-green-400" />
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0">
+                        <Check className="w-3 h-3 text-blue-400" />
                       </div>
                       <span className="text-gray-300 text-sm">{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                <button className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group/btn">
+                <button className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-900/80 hover:from-blue-600 hover:to-blue-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group/btn">
                   <span>Más Información</span>
                   <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </button>
