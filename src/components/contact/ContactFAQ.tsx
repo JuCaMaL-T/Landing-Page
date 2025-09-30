@@ -16,12 +16,12 @@ const ContactFAQ: FC = () => {
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-1/3 left-12 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-2xl"
+          className="absolute top-1/3 left-12 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-2xl"
           animate={{ scale: [1, 1.4, 1], rotate: [0, 180, 360] }}
           transition={{ duration: 20, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-20 w-40 h-40 bg-gradient-to-br from-cyan-500/10 to-green-500/10 rounded-full blur-2xl"
+          className="absolute bottom-1/4 right-20 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-2xl"
           animate={{ scale: [1.3, 0.9, 1.3], rotate: [360, 180, 0] }}
           transition={{ duration: 25, repeat: Infinity }}
         />
@@ -35,15 +35,15 @@ const ContactFAQ: FC = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="flex items-center justify-center gap-2 mb-6">
-          <HelpCircle className="w-6 h-6 text-purple-400" />
-          <p className="text-sm tracking-widest text-purple-400 uppercase">
+          <HelpCircle className="w-6 h-6 text-blue-400" />
+          <p className="text-sm tracking-widest text-blue-400 uppercase">
             Preguntas Frecuentes
           </p>
         </div>
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
           Resolvemos Tus{" "}
-          <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
             Dudas
           </span>
         </h2>
@@ -85,11 +85,11 @@ const ContactFAQ: FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="relative p-[2px] rounded-3xl bg-gradient-to-br from-purple-500/20 via-blue-500/20 to-cyan-500/20">
+          <div className="relative p-[2px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-blue-700/20 to-blue-900/20">
             <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-3xl p-8">
               <div className="max-w-2xl mx-auto">
                 <motion.div
-                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center"
+                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 flex items-center justify-center"
                   whileHover={{ scale: 1.1, rotate: 10 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -98,7 +98,7 @@ const ContactFAQ: FC = () => {
 
                 <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                   ¿No Encontraste Tu{" "}
-                  <span className="bg-gradient-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text">
+                  <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
                     Respuesta
                   </span>
                   ?
@@ -111,7 +111,7 @@ const ContactFAQ: FC = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.button
-                    className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-purple-500/40"
+                    className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -120,7 +120,7 @@ const ContactFAQ: FC = () => {
                   </motion.button>
 
                   <motion.button
-                    className="px-8 py-4 rounded-2xl border border-purple-400 text-purple-400 hover:bg-purple-900/30 font-semibold transition-all duration-300 hover:scale-105"
+                    className="px-8 py-4 rounded-2xl border border-blue-400 text-blue-400 hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:scale-105"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -135,7 +135,7 @@ const ContactFAQ: FC = () => {
                     { value: "24/7", label: "Disponibilidad" }
                   ].map((stat, index) => (
                     <div key={index} className="text-center">
-                      <div className="text-lg font-extrabold text-purple-400 mb-1">
+                      <div className="text-lg font-extrabold text-blue-400 mb-1">
                         {stat.value}
                       </div>
                       <div className="text-xs text-gray-400">

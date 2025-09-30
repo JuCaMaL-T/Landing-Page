@@ -10,22 +10,22 @@ const ServicesHero: FC = () => {
         <div className="flex w-full min-h-[80vh] px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-24 lg:py-32 relative overflow-hidden items-center justify-center">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div
-                    className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full opacity-60"
+                    className="absolute top-20 left-10 w-2 h-2 bg-blue-500 rounded-full opacity-60"
                     animate={{ y: [0, -20, 0], opacity: [0.6, 1, 0.6] }}
                     transition={{ duration: 3, repeat: Infinity }}
                 />
                 <motion.div
-                    className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full opacity-40"
+                    className="absolute top-40 right-20 w-3 h-3 bg-blue-600 rounded-full opacity-40"
                     animate={{ y: [0, -30, 0], opacity: [0.4, 0.8, 0.4] }}
                     transition={{ duration: 4, repeat: Infinity, delay: 1 }}
                 />
                 <motion.div
-                    className="absolute bottom-32 left-32 w-1 h-1 bg-cyan-400 rounded-full opacity-70"
+                    className="absolute bottom-32 left-32 w-1 h-1 bg-blue-700 rounded-full opacity-70"
                     animate={{ y: [0, -15, 0], opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
                 />
                 <motion.div
-                    className="absolute bottom-20 right-40 w-2 h-2 bg-indigo-400 rounded-full opacity-50"
+                    className="absolute bottom-20 right-40 w-2 h-2 bg-blue-800 rounded-full opacity-50"
                     animate={{ y: [0, -25, 0], opacity: [0.5, 0.9, 0.5] }}
                     transition={{ duration: 3.5, repeat: Infinity, delay: 2 }}
                 />
@@ -33,13 +33,13 @@ const ServicesHero: FC = () => {
 
             <div className="flex flex-col items-center text-center max-w-6xl mx-auto w-full relative z-10">
                 <motion.div
-                    className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30"
+                    className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 border border-blue-500/30"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <Sparkles className="w-5 h-5 text-blue-400" />
-                    <span className="text-blue-400 text-sm font-medium">Soluciones Innovadoras</span>
+                    <Sparkles className="w-5 h-5 text-blue-500" />
+                    <span className="text-blue-500 text-sm font-medium">Soluciones Innovadoras</span>
                 </motion.div>
 
                 <motion.h1
@@ -54,7 +54,7 @@ const ServicesHero: FC = () => {
                             variants={textVariant}
                             className={
                                 word.includes("Servicios")
-                                    ? "bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 text-transparent bg-clip-text"
+                                    ? "bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text"
                                     : ""
                             }
                         >
@@ -80,12 +80,12 @@ const ServicesHero: FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 0.8 }}
                 >
-                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
+                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
                         <span>Solicitar Cotización</span>
                         <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
                     </button>
 
-                    <button className="px-8 py-4 rounded-2xl border border-blue-400 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
+                    <button className="px-8 py-4 rounded-2xl border border-blue-500 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
                         Ver Portafolio
                     </button>
                 </motion.div>
@@ -97,17 +97,17 @@ const ServicesHero: FC = () => {
                     transition={{ delay: 1.2, duration: 0.8 }}
                 >
                     <div className="text-center">
-                        <div className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-2">6+</div>
+                        <div className="text-3xl sm:text-4xl font-extrabold text-blue-500 mb-2">6+</div>
                         <div className="text-gray-400 text-sm">Servicios Especializados</div>
                     </div>
 
                     <div className="text-center">
-                        <div className="text-3xl sm:text-4xl font-extrabold text-purple-400 mb-2">100%</div>
+                        <div className="text-3xl sm:text-4xl font-extrabold text-blue-700 mb-2">100%</div>
                         <div className="text-gray-400 text-sm">Personalización</div>
                     </div>
 
                     <div className="text-center">
-                        <div className="text-3xl sm:text-4xl font-extrabold text-cyan-400 mb-2">24/7</div>
+                        <div className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2">24/7</div>
                         <div className="text-gray-400 text-sm">Soporte Técnico</div>
                     </div>
                 </motion.div>
