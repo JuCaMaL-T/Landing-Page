@@ -46,12 +46,12 @@ export const teamMembers = [
   {
     name: "David Rangel",
     role: "Developer",
-    speciality: "Full Stack Developer",
+    speciality: "Web Developer",
     image: "/team/Mauricio.png",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    skills: ["Habilidad 1", "Habilidad 2", "Habilidad 3", "Habilidad 4"],
-    experience: "Por definir",
-    projects: "Por definir",
+    bio: "Programador web con enfoque en el desarrollo frontend y backend utilizando tecnologías modernas.",
+    skills: ["Astro", "React", "TypeScript", "Tailwind CSS"],
+    experience: "Desarrollador Junior",
+    projects: "3",
     gradient: "from-blue-800 to-black",
   },
 ];
