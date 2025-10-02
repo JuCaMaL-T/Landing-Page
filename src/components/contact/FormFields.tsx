@@ -21,7 +21,12 @@ const FormFields: FC<FormFieldsProps> = ({
   onChange
 }) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form 
+      onSubmit={onSubmit} 
+      action="https://formspree.io/f/xwprbkeg" 
+      method="POST"
+      className="space-y-8"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -35,12 +40,14 @@ const FormFields: FC<FormFieldsProps> = ({
           <div className="relative">
             <input
               type="text"
+              name="nombre"
               value={formData.nombre}
               onChange={(e) => onChange('nombre', e.target.value)}
               className={`w-full px-4 py-4 bg-gray-800/50 border-2 ${
                 errors.nombre ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="Tu nombre completo"
+              required
             />
             {errors.nombre && (
               <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -63,12 +70,14 @@ const FormFields: FC<FormFieldsProps> = ({
           <div className="relative">
             <input
               type="email"
+              name="email"
               value={formData.correo}
               onChange={(e) => onChange('correo', e.target.value)}
               className={`w-full px-4 py-4 bg-gray-800/50 border-2 ${
                 errors.correo ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="tu@email.com"
+              required
             />
             {errors.correo && (
               <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -93,12 +102,14 @@ const FormFields: FC<FormFieldsProps> = ({
           <div className="relative">
             <input
               type="tel"
+              name="numero"
               value={formData.numero}
               onChange={(e) => onChange('numero', e.target.value)}
               className={`w-full px-4 py-4 bg-gray-800/50 border-2 ${
                 errors.numero ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="+57 300 123 4567"
+              required
             />
             {errors.numero && (
               <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -121,12 +132,14 @@ const FormFields: FC<FormFieldsProps> = ({
           <div className="relative">
             <input
               type="text"
+              name="asunto"
               value={formData.asunto}
               onChange={(e) => onChange('asunto', e.target.value)}
               className={`w-full px-4 py-4 bg-gray-800/50 border-2 ${
                 errors.asunto ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="¿En qué podemos ayudarte?"
+              required
             />
             {errors.asunto && (
               <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -149,6 +162,7 @@ const FormFields: FC<FormFieldsProps> = ({
         </label>
         <div className="relative">
           <textarea
+            name="mensaje"
             value={formData.mensaje}
             onChange={(e) => onChange('mensaje', e.target.value)}
             rows={6}
@@ -156,6 +170,7 @@ const FormFields: FC<FormFieldsProps> = ({
               errors.mensaje ? 'border-red-500' : 'border-gray-600'
             } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors resize-none`}
             placeholder="Cuéntanos sobre tu proyecto, objetivos, presupuesto aproximado y cualquier detalle que consideres importante..."
+            required
           />
           {errors.mensaje && (
             <p className="text-red-400 text-sm mt-2 flex items-center gap-1">

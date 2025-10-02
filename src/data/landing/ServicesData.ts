@@ -7,20 +7,20 @@ export const services: CardProps[] = [
     title: "Inteligencia Artificial",
     description:
       "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
-    href: "/services/ai",
+    href: "/services",
   },
   {
     icon: Laptop,
     title: "Desarrollo de Software",
     description:
       "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
-    href: "/services/development",
+    href: "/services",
   },
   {
     icon: Handshake,
     title: "Consultoría Tecnológica",
     description:
       "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
-    href: "/services/consulting",
+    href: "/services",
   },
 ]

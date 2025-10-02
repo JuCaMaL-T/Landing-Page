@@ -7,7 +7,7 @@ const ServicesGrid = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
 
   return (
-    <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-black min-h-screen">
+    <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-xl"
@@ -113,11 +113,9 @@ const ServicesGrid = () => {
         ))}
       </motion.div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selectedService !== null && (
           <>
-            {/* Overlay oscuro */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -127,7 +125,6 @@ const ServicesGrid = () => {
               onClick={() => setSelectedService(null)}
             />
 
-            {/* Modal content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -137,7 +134,6 @@ const ServicesGrid = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative w-full max-w-7xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-black/95 to-black/90 backdrop-blur-xl rounded-3xl border border-blue-500/20 shadow-2xl">
-                {/* Botón cerrar */}
                 <button
                   onClick={() => setSelectedService(null)}
                   className="absolute top-6 right-6 z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors"
@@ -146,7 +142,6 @@ const ServicesGrid = () => {
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
-                  {/* Lado izquierdo - Info del servicio */}
                   <div className="flex flex-col">
                     <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
                       {(() => {
@@ -186,32 +181,27 @@ const ServicesGrid = () => {
                     </a>
                   </div>
 
-                  {/* Lado derecho - Imágenes */}
                   <div className="flex flex-col gap-4">
-                    {/* Contenedor de imagen 1 */}
-                    <div className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-gray-500 text-sm">Imagen del servicio 1</span>
+                    {servicesData[selectedService].images?.map((imageSrc, index) => (
+                      <div 
+                        key={index}
+                        className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
+                      >
+                      <img 
+                        src={imageSrc} 
+                        alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
+                        }}
+                      />
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-500/10 to-blue-900/10">
+                          <span className="text-gray-500 text-sm">Imagen {index + 1}</span>
+                        </div>
                       </div>
-                      {/* Aquí puedes agregar: <img src="..." alt="..." className="w-full h-full object-cover" /> */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-blue-900/5 group-hover/img:from-blue-600/10 group-hover/img:to-blue-900/10 transition-all duration-300" />
-                    </div>
-
-                    {/* Contenedor de imagen 2 */}
-                    <div className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-gray-500 text-sm">Imagen del servicio 2</span>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-blue-900/5 group-hover/img:from-blue-600/10 group-hover/img:to-blue-900/10 transition-all duration-300" />
-                    </div>
-
-                    {/* Contenedor de imagen 3 */}
-                    <div className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-gray-500 text-sm">Imagen del servicio 3</span>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-blue-900/5 group-hover/img:from-blue-600/10 group-hover/img:to-blue-900/10 transition-all duration-300" />
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -43,13 +43,32 @@ export const useContactForm = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
+    setSubmitStatus('idle');
     
     try {
-      // Aquí iría tu lógica real de envío
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setSubmitStatus('success');
-      setFormData({ nombre: '', correo: '', numero: '', asunto: '', mensaje: '' });
+      const response = await fetch('https://formspree.io/f/xwprbkeg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          email: formData.correo,
+          numero: formData.numero,
+          asunto: formData.asunto,
+          mensaje: formData.mensaje,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ nombre: '', correo: '', numero: '', asunto: '', mensaje: '' });
+        setErrors({});
+      } else {
+        setSubmitStatus('error');
+      }
     } catch (error) {
+      console.error('Error al enviar:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
