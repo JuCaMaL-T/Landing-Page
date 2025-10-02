@@ -24,12 +24,9 @@ const MapCTA: FC = () => {
           y atención. Nuestras oficinas están diseñadas para hacer de tu visita una experiencia cómoda.
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row justify-center">
           <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-900 text-white font-medium hover:scale-105 transition-transform">
             📅 Agendar Cita
-          </button>
-          <button className="flex items-center gap-2 px-6 py-3 rounded-xl border border-blue-500 text-blue-500 hover:bg-blue-500/10 transition-colors">
-            🚗 Ver Transporte Público
           </button>
         </div>
       </div>

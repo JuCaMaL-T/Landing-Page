@@ -1,11 +1,13 @@
-import type { FC } from "react";
-import { motion } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, ArrowRight, X } from "lucide-react";
 import { servicesData } from "../../data/services/OurServicesData";
 
-const ServicesGrid: FC = () => {
+const ServicesGrid = () => {
+  const [selectedService, setSelectedService] = useState<number | null>(null);
+
   return (
-    <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative">
+    <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-xl"
@@ -98,7 +100,10 @@ const ServicesGrid: FC = () => {
                   ))}
                 </div>
 
-                <button className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-900/80 hover:from-blue-600 hover:to-blue-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group/btn">
+                <button 
+                  onClick={() => setSelectedService(i)}
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-900/80 hover:from-blue-600 hover:to-blue-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group/btn"
+                >
                   <span>Más Información</span>
                   <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </button>
@@ -107,6 +112,103 @@ const ServicesGrid: FC = () => {
           </motion.div>
         ))}
       </motion.div>
+
+      <AnimatePresence>
+        {selectedService !== null && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+              onClick={() => setSelectedService(null)}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="fixed inset-4 md:inset-10 lg:inset-20 z-50 flex items-center justify-center p-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full max-w-7xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-black/95 to-black/90 backdrop-blur-xl rounded-3xl border border-blue-500/20 shadow-2xl">
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="absolute top-6 right-6 z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors"
+                >
+                  <X className="w-6 h-6 text-white" />
+                </button>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
+                  <div className="flex flex-col">
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
+                      {(() => {
+                        const Icon = servicesData[selectedService].icon;
+                        return <Icon className="w-10 h-10 text-blue-500" />;
+                      })()}
+                    </div>
+
+                    <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                      {servicesData[selectedService].title}
+                    </h2>
+
+                    <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                      {servicesData[selectedService].description}
+                    </p>
+
+                    <div className="space-y-4 mb-8">
+                      <p className="text-base font-semibold text-blue-500 mb-4">
+                        Incluye:
+                      </p>
+                      {servicesData[selectedService].features.map((feature, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0">
+                            <Check className="w-4 h-4 text-blue-400" />
+                          </div>
+                          <span className="text-gray-300">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <a
+                      href="/contact"
+                      className="mt-auto w-full flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 hover:from-blue-500 hover:to-blue-800 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group"
+                    >
+                      <span>Pedir Servicio</span>
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </div>
+
+                  <div className="flex flex-col gap-4">
+                    {servicesData[selectedService].images?.map((imageSrc, index) => (
+                      <div 
+                        key={index}
+                        className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
+                      >
+                      <img 
+                        src={imageSrc} 
+                        alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
+                        }}
+                      />
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-500/10 to-blue-900/10">
+                          <span className="text-gray-500 text-sm">Imagen {index + 1}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
