@@ -1,26 +1,25 @@
-import { Brain, Laptop, Handshake } from "lucide-react"
 import type { CardProps } from "../../components/ui/Card"
 
 export const services: CardProps[] = [
   {
-    icon: Brain,
+    cardIcon: "/services/icons/1.png",
     title: "Inteligencia Artificial",
     description:
-      "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
+      "Automatiza procesos y toma decisiones inteligentes con soluciones impulsadas por IA diseñadas para tu negocio.",
     href: "/services",
   },
   {
-    icon: Laptop,
+    cardIcon: "/services/icons/2.png",
     title: "Desarrollo de Software",
     description:
-      "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
+      "Creamos aplicaciones personalizadas, seguras y escalables que transforman tus ideas en productos digitales reales.",
     href: "/services",
   },
   {
-    icon: Handshake,
+    cardIcon: "/services/icons/3.png",
     title: "Consultoría Tecnológica",
     description:
-      "Aquí va a ir una frase que describa un poquito del producto y que genere intriga en la gente, para que hagan click en el enlace para ver toda la info.",
+      "Te ayudamos a implementar tecnología estratégica que optimiza tus operaciones y acelera tu crecimiento digital.",
     href: "/services",
   },
 ]

@@ -1,23 +1,55 @@
-import type { FC } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { milestones } from "../../data/about/AboutData";
 import TimelineItem from "../ui/TimelineItem";
-import { Clock, Code, Zap, Rocket, Star, Sparkles } from "lucide-react";
+import { Clock, Code, Zap, Rocket, Star, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
-const Timeline: FC = () => {
+const Timeline = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(prev + 1, milestones.length - 1));
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const getVisibleCards = (): { 
+    data: (typeof milestones)[number]; 
+    position: "left" | "center" | "right"; 
+    index: number 
+  }[] => {
+    const cards = [];
+    
+    if (currentIndex > 0) {
+      cards.push({ 
+        data: milestones[currentIndex - 1], 
+        position: "left" as const, 
+        index: currentIndex - 1 
+      });
+    }
+    
+    cards.push({ 
+      data: milestones[currentIndex], 
+      position: "center" as const, 
+      index: currentIndex 
+    });
+    
+    if (currentIndex < milestones.length - 1) {
+      cards.push({ 
+        data: milestones[currentIndex + 1], 
+        position: "right" as const, 
+        index: currentIndex + 1 
+      });
+    }
+
+    return cards;
+  };
+
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-1/4 w-48 h-48 bg-gradient-to-br from-blue-500/20 to-blue-900/20 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.3, 1], 
-            rotate: [0, 180, 360],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{ duration: 25, repeat: Infinity }}
-        />
         <motion.div
           className="absolute bottom-32 right-1/4 w-56 h-56 bg-gradient-to-br from-blue-500/20 to-blue-900/20 rounded-full blur-3xl"
           animate={{ 
@@ -159,7 +191,7 @@ const Timeline: FC = () => {
           <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
             Camino
           </span>{" "}
-          Hacia la Excelencia
+          Que Hemos Recorrido
         </h2>
 
         <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -168,46 +200,89 @@ const Timeline: FC = () => {
         </p>
       </motion.div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500 via-blue-700 to-blue-900 transform -translate-x-1/2 hidden lg:block" />
-        
-        <motion.div
-          className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full hidden lg:block"
-          animate={{ y: [0, 800] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          style={{ top: '0%' }}
-        />
+      <div className="relative z-10 flex-1 flex items-center justify-center mb-12 w-full">
+        <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-8 lg:px-16">
+          <div className="relative w-full h-[650px] overflow-hidden">
+            <div className="relative w-full h-full flex items-center justify-center">
+              {getVisibleCards().map((card) => {
+                const { position, data, index } = card;
+                
+                const variants = {
+                  center: {
+                    x: 0,
+                    scale: 1,
+                    opacity: 1,
+                    zIndex: 30,
+                  },
+                  left: {
+                    x: "-110%",
+                    scale: 0.75,
+                    opacity: 0.5,
+                    zIndex: 10,
+                  },
+                  right: {
+                    x: "110%",
+                    scale: 0.75,
+                    opacity: 0.5,
+                    zIndex: 10,
+                  },
+                };
 
-        <motion.div
-          className="space-y-12"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.3 } },
-          }}
-        >
-          {milestones.map((milestone, i) => (
-            <div key={i} className="relative">
-              <motion.div
-                className="absolute -top-4 -left-4 w-8 h-8 border-2 border-blue-700/40 rounded-full hidden lg:block"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div
-                className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-r from-blue-500/40 to-blue-900/40 rounded-full hidden lg:block"
-                animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-              />
-              <TimelineItem milestone={milestone} index={i} />
+                return (
+                  <motion.div
+                    key={`${index}-${position}`}
+                    className="absolute w-full max-w-[550px] px-2"
+                    variants={variants}
+                    initial={position}
+                    animate={position}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                  >
+                    <TimelineItem 
+                      milestone={data} 
+                      index={index} 
+                      position={position}
+                    />
+                  </motion.div>
+                );
+              })}
             </div>
-          ))}
-        </motion.div>
+          </div>
+
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all"
+          >
+            <ChevronLeft className="w-6 h-6 text-blue-400" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all"
+          >
+            <ChevronRight className="w-6 h-6 text-blue-400" />
+          </button>
+        </div>
       </div>
-      
+
+      <div className="flex items-center justify-center gap-2 mb-12 relative z-10">
+        {milestones.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "w-8 bg-blue-400"
+                : "w-2 bg-gray-600 hover:bg-gray-500"
+            }`}
+          />
+        ))}
+      </div>
+
       <motion.div
-        className="text-center mt-20 relative z-10"
+        className="text-center relative z-10"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}

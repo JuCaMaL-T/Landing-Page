@@ -67,13 +67,17 @@ const ServicesGrid = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-blue-900/20 hover:from-blue-600/30 hover:to-blue-900/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500"
           >
-            <div className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-lg rounded-3xl p-8 h-full flex flex-col relative overflow-hidden">
+            <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative rounded-3xl p-8 h-full flex flex-col relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1">
-                    <service.icon className="w-8 h-8 text-blue-500" />
+                  <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1">
+                    <img 
+                      src={service.iconImage} 
+                      alt={`${service.title} icon`}
+                      className="w-18 h-18 object-contain"
+                    />
                   </div>
                   <span className="text-xs text-blue-500 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
                     Popular
@@ -102,10 +106,11 @@ const ServicesGrid = () => {
 
                 <button 
                   onClick={() => setSelectedService(i)}
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-900/80 hover:from-blue-600 hover:to-blue-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group/btn"
+                  className="relative w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden"
                 >
-                  <span>Más Información</span>
-                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000" />
+                  <span className="relative z-10">Más Información</span>
+                  <ArrowRight className="relative z-10 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
@@ -143,11 +148,12 @@ const ServicesGrid = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
                   <div className="flex flex-col">
-                    <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
-                      {(() => {
-                        const Icon = servicesData[selectedService].icon;
-                        return <Icon className="w-10 h-10 text-blue-500" />;
-                      })()}
+                    <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
+                      <img 
+                        src={servicesData[selectedService].iconImage} 
+                        alt={`${servicesData[selectedService].title} icon`}
+                        className="w-20 h-20 object-contain"
+                      />
                     </div>
 
                     <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -185,17 +191,17 @@ const ServicesGrid = () => {
                     {servicesData[selectedService].images?.map((imageSrc, index) => (
                       <div 
                         key={index}
-                        className="relative h-48 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
+                        className="relative h-54 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
                       >
-                      <img 
-                        src={imageSrc} 
-                        alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                          (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
-                        }}
-                      />
+                        <img 
+                          src={imageSrc} 
+                          alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                            (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
+                          }}
+                        />
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
                         <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-500/10 to-blue-900/10">
                           <span className="text-gray-500 text-sm">Imagen {index + 1}</span>

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import type { FC } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Card from "../ui/Card";
-import { ArrowRight, Cpu, Rocket, Layers, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { containerVariants, itemVariants } from "./Variants";
 
 const SoftwareLaunch: FC = () => {
+  const images = ["/services/photos/SaaS1_FS.webp", "/services/photos/SaaS2_FS.webp", "/services/photos/SaaS3_FS.webp", "/services/photos/SaaS4_FS.webp", "/services/photos/SaaS5_FS.webp"];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <motion.section
       className="w-full h-auto text-white p-6 pb-16 sm:rounded-2xl"
@@ -14,9 +25,9 @@ const SoftwareLaunch: FC = () => {
       viewport={{ once: true, amount: 0.3 }}
       variants={containerVariants}
     >
-      <div className="grid md:grid-cols-2 gap-10 items-center">
+      <div className="grid lg:grid-cols-2 gap-10 items-center">
         <motion.div
-          className="flex items-center justify-center border border-gray-600 rounded-2xl min-h-[240px] sm:min-h-[360px] md:min-h-[480px] relative overflow-hidden"
+          className="flex items-center justify-center border border-gray-600 rounded-2xl relative overflow-hidden aspect-video order-first lg:order-none"
           variants={itemVariants}
         >
           <span className="absolute top-3 left-3 sm:top-5 sm:left-5 border-t-2 border-l-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-tl-lg"></span>
@@ -24,27 +35,29 @@ const SoftwareLaunch: FC = () => {
           <span className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 border-b-2 border-l-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-bl-lg"></span>
           <span className="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 border-b-2 border-r-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-br-lg"></span>
 
-          <img
-            src="/Logo.png"
-            alt="Vista previa del software"
-            className="w-full h-full object-cover rounded-3xl"
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImageIndex}
+              src={images[currentImageIndex]}
+              alt="Vista previa del software"
+              className="w-full h-full object-cover rounded-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            />
+          </AnimatePresence>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="uppercase tracking-widest text-xs sm:text-sm text-indigo-400 mb-2">
-            Nuevo
-          </p>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-snug">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">
+            <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text text-transparent animate-gradient-x">
               Nuestro Lanzamiento
             </span>{" "}
             Más Reciente
           </h2>
           <p className="text-gray-300 mb-6 text-sm sm:text-base">
-            Aquí ponemos una pequeña descripción del software de construcción
-            (Hay que buscarle nombre, tiene que llamar la atención y llevar a la
-            gente a que vea un demo de la plataforma y lo que puede hacer).
+            <strong>Plataforma Jucamal 2.0</strong> es un sistema SaaS para la gestión administrativa y operativa en empresas de construcción. Permite manejar usuarios, roles, recibos y alquiler de maquinaria desde una plataforma moderna, segura y fácil de usar.
           </p>
 
           <motion.div
@@ -54,28 +67,32 @@ const SoftwareLaunch: FC = () => {
             {React.Children.map(
               [
                 <Card
-                  icon={Rocket}
-                  iconClassName="w-6 h-6 text-blue-400"
-                  title="Rendimiento Óptimo"
-                  description="Optimizado para brindar la mejor experiencia en proyectos grandes."
+                  cardIcon="/services/icons/7.png"
+                  imageAlt="Experiencia Ágil"
+                  imageClassName="w-20 h-20 object-contain"
+                  title="Experiencia Ágil"
+                  description="Interfaz moderna y rápida, pensada para optimizar tu flujo de trabajo."
                 />,
                 <Card
-                  icon={Layers}
-                  iconClassName="w-6 h-6 text-purple-400"
+                  cardIcon="/services/icons/8.png"
+                  imageAlt="Gestión Modular"
+                  imageClassName="w-20 h-20 object-contain"
                   title="Gestión Modular"
-                  description="Organiza los recursos de tu construcción en módulos fáciles de usar."
+                  description="Administra usuarios, roles y maquinaria en módulos simples y eficientes."
                 />,
                 <Card
-                  icon={Cpu}
-                  iconClassName="w-6 h-6 text-green-400"
-                  title="Automatización"
-                  description="Automatiza procesos repetitivos para ahorrar tiempo y reducir errores."
+                  cardIcon="/services/icons/9.png"
+                  imageAlt="Sistematización"
+                  imageClassName="w-20 h-20 object-contain"
+                  title="Sistematización"
+                  description="Automatiza tareas clave y reduce el tiempo en procesos administrativos."
                 />,
                 <Card
-                  icon={Shield}
-                  iconClassName="w-6 h-6 text-red-400"
+                  cardIcon="/services/icons/10.png"
+                  imageAlt="Seguridad Avanzada"
+                  imageClassName="w-20 h-20 object-contain"
                   title="Seguridad Avanzada"
-                  description="Protección de datos y acceso seguro con cifrado de última generación."
+                  description="Datos protegidos con acceso seguro y cifrado de nivel empresarial."
                 />,
               ],
               (child, i) => (
@@ -87,7 +104,7 @@ const SoftwareLaunch: FC = () => {
           </motion.div>
 
           <motion.button
-            className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-gray-500 hover:border-green-400 transition hover:bg-green-400 hover:text-black text-sm sm:text-base"
+            className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-gray-500 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden sm:text-base"
             variants={itemVariants}
           >
             Requerir Demo <ArrowRight className="w-5 h-5" />

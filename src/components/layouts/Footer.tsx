@@ -53,13 +53,13 @@ const Footer: FC = () => {
                             {[
                                 "Inteligencia Artificial",
                                 "Desarrollo de Software",
-                                "Aplicaciones Móviles",
+                                "SaaS",
                                 "Consultoría Tech",
                                 "Automatización",
                                 "Soporte 24/7"
                             ].map((service, index) => (
                                 <li key={index}>
-                                    <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group">
+                                    <a href="/services" className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group">
                                         <ArrowRight className="w-3 h-3 mr-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                                         <span className="group-hover:translate-x-1 transition-transform duration-200">{service}</span>
                                     </a>
@@ -125,9 +125,9 @@ const Footer: FC = () => {
                         <div className="flex items-center space-x-4">
                             <span className="text-sm text-gray-400 mr-2">Síguenos:</span>
                             {[
-                                { icon: Facebook, href: "#", label: "Facebook" },
-                                { icon: Instagram, href: "#", label: "Instagram" },
-                                { icon: Youtube, href: "#", label: "Youtube" }
+                                { icon: Facebook, href: "https://www.facebook.com/p/Jucamal-Ingenier%C3%ADa-Y-Construcciones-SAS-100063697054425/?locale=es_LA", label: "Facebook" },
+                                { icon: Instagram, href: "https://www.instagram.com/jucamal_sas/", label: "Instagram" },
+                                { icon: Youtube, href: "https://www.youtube.com/channel/UCd10d7EIZq88cNFXkWQyF_g", label: "Youtube" }
                             ].map((social, index) => (
                                 <a
                                     key={index}

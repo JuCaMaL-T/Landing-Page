@@ -5,30 +5,26 @@ import { services } from "../../data/landing/ServicesData";
 
 const Services: FC = () => {
   return (
-    <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-16 lg:py-20">
+    <section className="flex flex-col w-full px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-16 sm:py-18 md:py-20 lg:py-20">
       <motion.div
-        className="max-w-7xl mx-auto text-center mb-16"
+        className="max-w-7xl mx-auto text-center mb-12 md:mb-16 lg:mb-16 w-full"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <p className="text-sm tracking-widest text-gray-400 uppercase mb-5">
-          Services
-        </p>
 
-        <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white mb-6 leading-tight">
-          Superando Las Expectativas
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight">
+          Tu Crecimiento, Nuestra Meta
         </h2>
 
-        <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          Aquí va a ir una frase pequeña que sea impactante sobre los servicios
-          que vamos a proveer
+        <p className="text-sm sm:text-base md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          Usamos herramientas para transformar y potenciar tu negocio.
         </p>
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8 xl:gap-10 max-w-7xl mx-auto w-full"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}

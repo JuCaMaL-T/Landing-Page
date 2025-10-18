@@ -70,9 +70,6 @@ const WorkProcess: FC = () => {
           >
             <div className="flex-1 text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-                <span className="text-6xl sm:text-7xl font-extrabold bg-gradient-to-r from-blue-500 to-blue-900 text-transparent bg-clip-text opacity-20">
-                  {step.step}
-                </span>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                     {step.title}
@@ -132,7 +129,7 @@ const WorkProcess: FC = () => {
             {i < processSteps.length - 1 && (
               <div className="hidden lg:block absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-8">
                 <motion.div
-                  className="w-px h-16 bg-gradient-to-b from-blue-500/50 to-blue-900/50"
+                  className="w-px h-230 bg-gradient-to-b from-blue-500/50 to-blue-900/50"
                   initial={{ scaleY: 0 }}
                   whileInView={{ scaleY: 1 }}
                   transition={{ duration: 0.8, delay: 0.5 }}

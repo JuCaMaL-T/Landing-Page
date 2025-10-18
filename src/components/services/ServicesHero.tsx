@@ -75,22 +75,6 @@ const ServicesHero: FC = () => {
                 </motion.p>
 
                 <motion.div
-                    className="flex flex-col sm:flex-row gap-5 mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 0.8 }}
-                >
-                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
-                        <span>Solicitar Cotización</span>
-                        <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-                    </button>
-
-                    <button className="px-8 py-4 rounded-2xl border border-blue-500 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
-                        Ver Portafolio
-                    </button>
-                </motion.div>
-
-                <motion.div
                     className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-2xl"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
