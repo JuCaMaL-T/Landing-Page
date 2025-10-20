@@ -6,6 +6,7 @@ import { Clock, Code, Zap, Rocket, Star, Sparkles, ChevronLeft, ChevronRight } f
 
 const Timeline = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
 
   const handleNext = () => {
     setCurrentIndex((prev) => Math.min(prev + 1, milestones.length - 1));
@@ -49,133 +50,138 @@ const Timeline = () => {
 
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute bottom-32 right-1/4 w-56 h-56 bg-gradient-to-br from-blue-500/20 to-blue-900/20 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 0.8, 1.2], 
-            rotate: [360, 180, 0],
-            x: [0, -40, 0],
-            y: [0, 20, 0]
-          }}
-          transition={{ duration: 30, repeat: Infinity }}
-        />
-
-        <motion.div
-          className="absolute top-1/4 right-1/3 w-32 h-32 border border-blue-500/30 rounded-lg"
-          animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/3 left-1/5 w-24 h-24 border-2 border-blue-700/40 rounded-full"
-          animate={{ 
-            rotate: [360, 0],
-            x: [0, 30, 0],
-            y: [0, -20, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity }}
-        />
-
-        {[...Array(12)].map((_, i) => (
+      {isInView && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-blue-500/40 to-blue-900/40 rounded-full"
-            style={{
-              left: `${10 + (i * 8)}%`,
-              top: `${20 + (i * 5)}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0.3, 1, 0.3],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 8 + (i * 0.5),
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-          />
-        ))}
-
-        <div className="absolute inset-0 opacity-[0.03]">
-          <div
-            className="h-full w-full" 
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(30, 58, 138, 0.5) 1px, transparent 1px)
-              `,
-              backgroundSize: '50px 50px'
-            }}
-          />
-        </div>
-
-        <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 1000 800">
-          <motion.path
-            d="M100,100 Q200,50 300,100 T500,100 Q600,150 700,100 T900,100"
-            stroke="url(#gradient1)"
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-          />
-          <motion.path
-            d="M150,700 Q250,650 350,700 T550,700 Q650,750 750,700 T950,700"
-            stroke="url(#gradient2)"
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", delay: 2 }}
-          />
-          <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
-              <stop offset="50%" stopColor="#1E3A8A" stopOpacity="1" />
-              <stop offset="100%" stopColor="#1E40AF" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#1E40AF" stopOpacity="0" />
-              <stop offset="50%" stopColor="#2563EB" stopOpacity="1" />
-              <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      <div className="absolute inset-0 pointer-events-none z-5">
-        {[
-          { icon: Code, position: { top: '15%', left: '15%' }, delay: 0 },
-          { icon: Zap, position: { top: '25%', right: '20%' }, delay: 1 },
-          { icon: Rocket, position: { bottom: '40%', left: '10%' }, delay: 2 },
-          { icon: Star, position: { top: '60%', right: '15%' }, delay: 1.5 },
-          { icon: Sparkles, position: { bottom: '20%', right: '25%' }, delay: 0.5 },
-        ].map((item, index) => (
-          <motion.div
-            key={index}
-            className="absolute hidden lg:block"
-            style={item.position}
-            initial={{ opacity: 0, scale: 0 }}
+            className="absolute bottom-32 right-1/4 w-56 h-56 bg-gradient-to-br from-blue-500/20 to-blue-900/20 rounded-full blur-3xl"
             animate={{ 
-              opacity: [0.3, 0.7, 0.3],
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360]
+              scale: [1.2, 0.8, 1.2], 
+              rotate: [360, 180, 0],
+              x: [0, -40, 0],
+              y: [0, 20, 0]
             }}
-            transition={{ duration: 6 + index, repeat: Infinity, delay: item.delay * 2 }}
-          >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center">
-              <item.icon className="w-6 h-6 text-blue-300" />
-            </div>
-          </motion.div>
-        ))}
-      </div>
+            transition={{ duration: 30, repeat: Infinity }}
+          />
+
+          <motion.div
+            className="absolute top-1/4 right-1/3 w-32 h-32 border border-blue-500/30 rounded-lg"
+            animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+
+          <motion.div
+            className="absolute bottom-1/3 left-1/5 w-24 h-24 border-2 border-blue-700/40 rounded-full"
+            animate={{ 
+              rotate: [360, 0],
+              x: [0, 30, 0],
+              y: [0, -20, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity }}
+          />
+
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-gradient-to-r from-blue-500/40 to-blue-900/40 rounded-full"
+              style={{
+                left: `${10 + (i * 8)}%`,
+                top: `${20 + (i * 5)}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 8 + (i * 0.5),
+                repeat: Infinity,
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div
+              className="h-full w-full" 
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(30, 58, 138, 0.5) 1px, transparent 1px)
+                `,
+                backgroundSize: '50px 50px'
+              }}
+            />
+          </div>
+
+          <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 1000 800">
+            <motion.path
+              d="M100,100 Q200,50 300,100 T500,100 Q600,150 700,100 T900,100"
+              stroke="url(#gradient1)"
+              strokeWidth="2"
+              fill="none"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+            />
+            <motion.path
+              d="M150,700 Q250,650 350,700 T550,700 Q650,750 750,700 T950,700"
+              stroke="url(#gradient2)"
+              strokeWidth="2"
+              fill="none"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", delay: 2 }}
+            />
+            <defs>
+              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
+                <stop offset="50%" stopColor="#1E3A8A" stopOpacity="1" />
+                <stop offset="100%" stopColor="#1E40AF" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#1E40AF" stopOpacity="0" />
+                <stop offset="50%" stopColor="#2563EB" stopOpacity="1" />
+                <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      )}
+
+      {isInView && (
+        <div className="absolute inset-0 pointer-events-none z-5">
+          {[
+            { icon: Code, position: { top: '15%', left: '15%' }, delay: 0 },
+            { icon: Zap, position: { top: '25%', right: '20%' }, delay: 1 },
+            { icon: Rocket, position: { bottom: '40%', left: '10%' }, delay: 2 },
+            { icon: Star, position: { top: '60%', right: '15%' }, delay: 1.5 },
+            { icon: Sparkles, position: { bottom: '20%', right: '25%' }, delay: 0.5 },
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              className="absolute hidden lg:block"
+              style={item.position}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0.3, 0.7, 0.3],
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 6 + index, repeat: Infinity, delay: item.delay * 2 }}
+            >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center">
+                <item.icon className="w-6 h-6 text-blue-300" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
 
       <motion.div
         className="max-w-7xl mx-auto text-center mb-16 relative z-10"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
+        onViewportEnter={() => setIsInView(true)}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
@@ -254,13 +260,17 @@ const Timeline = () => {
 
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all"
+            disabled={currentIndex === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Anterior milestone"
           >
             <ChevronLeft className="w-6 h-6 text-blue-400" />
           </button>
           <button
             onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all"
+            disabled={currentIndex === milestones.length - 1}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 backdrop-blur-sm border border-blue-500/40 flex items-center justify-center hover:scale-110 hover:bg-blue-500/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Siguiente milestone"
           >
             <ChevronRight className="w-6 h-6 text-blue-400" />
           </button>
@@ -277,6 +287,7 @@ const Timeline = () => {
                 ? "w-8 bg-blue-400"
                 : "w-2 bg-gray-600 hover:bg-gray-500"
             }`}
+            aria-label={`Ir a milestone ${index + 1}`}
           />
         ))}
       </div>

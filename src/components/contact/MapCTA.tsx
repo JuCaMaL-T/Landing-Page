@@ -1,8 +1,9 @@
 import type { FC } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
-import { useState } from "react";
-import AppointmentModal from "./AppointmentModal";
+import { useState, lazy, Suspense } from "react";
+
+const AppointmentModal = lazy(() => import("./AppointmentModal"));
 
 const MapCTA: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,10 +43,12 @@ const MapCTA: FC = () => {
         </div>
       </motion.div>
 
-      <AppointmentModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
+      <Suspense fallback={null}>
+        <AppointmentModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+        />
+      </Suspense>
     </>
   );
 };

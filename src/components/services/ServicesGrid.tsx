@@ -1,10 +1,37 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, X } from "lucide-react";
 import { servicesData } from "../../data/services/OurServicesData";
 
 const ServicesGrid = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [loadedIcons, setLoadedIcons] = useState<Set<number>>(new Set());
+  const [loadedModalImages, setLoadedModalImages] = useState<Set<string>>(new Set());
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadedIcons(new Set(servicesData.map((_, i) => i)));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (gridRef.current) {
+      observer.observe(gridRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const loadModalImages = (serviceIndex: number) => {
+    const service = servicesData[serviceIndex];
+    if (service.images) {
+      setLoadedModalImages(new Set(service.images));
+    }
+  };
 
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
@@ -46,6 +73,7 @@ const ServicesGrid = () => {
       </motion.div>
 
       <motion.div
+        ref={gridRef}
         className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10"
         initial="hidden"
         whileInView="show"
@@ -73,11 +101,13 @@ const ServicesGrid = () => {
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-6">
                   <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1">
-                    <img 
-                      src={service.iconImage} 
-                      alt={`${service.title} icon`}
-                      className="w-18 h-18 object-contain"
-                    />
+                    {loadedIcons.has(i) && (
+                      <img 
+                        src={service.iconImage} 
+                        alt={`${service.title} icon`}
+                        className="w-18 h-18 object-contain"
+                      />
+                    )}
                   </div>
                   <span className="text-xs text-blue-500 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
                     Popular
@@ -105,7 +135,10 @@ const ServicesGrid = () => {
                 </div>
 
                 <button 
-                  onClick={() => setSelectedService(i)}
+                  onClick={() => {
+                    setSelectedService(i);
+                    loadModalImages(i);
+                  }}
                   className="relative w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000" />
@@ -149,11 +182,13 @@ const ServicesGrid = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
                   <div className="flex flex-col">
                     <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
-                      <img 
-                        src={servicesData[selectedService].iconImage} 
-                        alt={`${servicesData[selectedService].title} icon`}
-                        className="w-20 h-20 object-contain"
-                      />
+                      {loadedIcons.has(selectedService) && (
+                        <img 
+                          src={servicesData[selectedService].iconImage} 
+                          alt={`${servicesData[selectedService].title} icon`}
+                          className="w-20 h-20 object-contain"
+                        />
+                      )}
                     </div>
 
                     <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -193,16 +228,20 @@ const ServicesGrid = () => {
                         key={index}
                         className="relative h-54 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
                       >
-                        <img 
-                          src={imageSrc} 
-                          alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                            (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                        {loadedModalImages.has(imageSrc) && (
+                          <>
+                            <img 
+                              src={imageSrc} 
+                              alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                                (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                          </>
+                        )}
                         <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-500/10 to-blue-900/10">
                           <span className="text-gray-500 text-sm">Imagen {index + 1}</span>
                         </div>

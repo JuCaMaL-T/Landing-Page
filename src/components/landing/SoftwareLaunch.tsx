@@ -8,10 +8,15 @@ import { containerVariants, itemVariants } from "./Variants";
 const SoftwareLaunch: FC = () => {
   const images = ["/services/photos/SaaS1_FS.webp", "/services/photos/SaaS2_FS.webp", "/services/photos/SaaS3_FS.webp", "/services/photos/SaaS4_FS.webp", "/services/photos/SaaS5_FS.webp"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0, 1]));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex((prev) => {
+        const next = (prev + 1) % images.length;
+        setLoadedImages((prev) => new Set([...prev, next, (next + 1) % images.length]));
+        return next;
+      });
     }, 3000);
 
     return () => clearInterval(interval);
@@ -36,16 +41,20 @@ const SoftwareLaunch: FC = () => {
           <span className="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 border-b-2 border-r-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-br-lg"></span>
 
           <AnimatePresence mode="wait">
-            <motion.img
-              key={currentImageIndex}
-              src={images[currentImageIndex]}
-              alt="Vista previa del software"
-              className="w-full h-full object-cover rounded-2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            />
+            {images.map((img, idx) => (
+              loadedImages.has(idx) && (
+                <motion.img
+                  key={idx}
+                  src={img}
+                  alt="Vista previa del software"
+                  className="w-full h-full object-cover rounded-2xl absolute"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                />
+              )
+            ))}
           </AnimatePresence>
         </motion.div>
 

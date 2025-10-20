@@ -1,6 +1,6 @@
 import type { FC } from "react"
 import { motion } from "framer-motion"
-import { Calendar, TrendingUp, Image } from "lucide-react"
+import { Calendar, Image } from "lucide-react"
 
 type Milestone = {
   year: string
@@ -32,7 +32,12 @@ const TimelineItem: FC<TimelineItemProps> = ({ milestone, index, position = "cen
             <img
               src={milestone.image}
               alt={milestone.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute top-4 right-4">

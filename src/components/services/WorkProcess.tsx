@@ -2,21 +2,46 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { processSteps } from "../../data/services/OurServicesData";
 import { Clock } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
 const WorkProcess: FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-500/5 to-blue-900/5 rounded-full blur-2xl"
-          animate={{ scale: [1, 1.3, 1], x: [0, 30, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-32 right-1/3 w-48 h-48 bg-gradient-to-br from-blue-500/5 to-blue-900/5 rounded-full blur-2xl"
-          animate={{ scale: [1.2, 0.8, 1.2], y: [0, -40, 0] }}
-          transition={{ duration: 15, repeat: Infinity }}
-        />
+        {isVisible && (
+          <>
+            <motion.div
+              className="absolute top-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-500/5 to-blue-900/5 rounded-full blur-2xl"
+              animate={{ scale: [1, 1.3, 1], x: [0, 30, 0] }}
+              transition={{ duration: 12, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute bottom-32 right-1/3 w-48 h-48 bg-gradient-to-br from-blue-500/5 to-blue-900/5 rounded-full blur-2xl"
+              animate={{ scale: [1.2, 0.8, 1.2], y: [0, -40, 0] }}
+              transition={{ duration: 15, repeat: Infinity }}
+            />
+          </>
+        )}
       </div>
 
       <motion.div
@@ -45,6 +70,7 @@ const WorkProcess: FC = () => {
       </motion.div>
 
       <motion.div
+        ref={ref}
         className="max-w-6xl mx-auto relative z-10"
         initial="hidden"
         whileInView="show"

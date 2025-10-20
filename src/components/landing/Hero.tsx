@@ -3,9 +3,29 @@ import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { PlayCircle } from "lucide-react";
 import { textVariant } from "./Variants";
+import { useState, useEffect, useRef } from "react";
 
 const Hero: FC = () => {
     const title = ["TU TRANSFORMACION ", "DIGITAL ", "COMIENZA AQUI"];
+    const videoRef = useRef<HTMLDivElement>(null);
+    const [videoVisible, setVideoVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setVideoVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <div className="flex w-full min-h-[85vh] lg:min-h-screen px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-8 sm:py-12 md:py-14 lg:py-16 relative overflow-hidden">
@@ -98,17 +118,19 @@ const Hero: FC = () => {
                     transitionSpeed={1000}
                     className="w-full max-w-2xl"
                 >
-                    <div className="relative w-full">
-                    <video
-                    src="/Logo_Final.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-auto rounded-2xl shadow-2xl shadow-blue-500/20"
-                    >
-                    Tu navegador no soporta la reproducción de video.
-                    </video>
+                    <div className="relative w-full" ref={videoRef}>
+                    {videoVisible && (
+                        <video
+                        src="/Logo-3.webm"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-auto rounded-2xl shadow-2xl shadow-blue-500/20"
+                        >
+                        Tu navegador no soporta la reproducción de video.
+                        </video>
+                    )}
                     </div>
                 </Tilt>
                 </motion.div>

@@ -1,10 +1,11 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { HelpCircle, MessageCircle } from "lucide-react";
 import FAQItem from "../ui/FAQItem";
 import { faqs } from "../../data/contact/ContactData";
-import QuestionModal from "./QuestionModal";
+
+const QuestionModal = lazy(() => import("./QuestionModal"));
 
 const ContactFAQ: FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -145,10 +146,12 @@ const ContactFAQ: FC = () => {
         </motion.div>
       </div>
 
-      <QuestionModal 
-        isOpen={isQuestionModalOpen} 
-        onClose={() => setIsQuestionModalOpen(false)} 
-      />
+      <Suspense fallback={null}>
+        <QuestionModal 
+          isOpen={isQuestionModalOpen} 
+          onClose={() => setIsQuestionModalOpen(false)} 
+        />
+      </Suspense>
     </section>
   );
 };
