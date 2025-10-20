@@ -1,12 +1,15 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { HelpCircle, MessageCircle } from "lucide-react";
 import FAQItem from "../ui/FAQItem";
 import { faqs } from "../../data/contact/ContactData";
 
+const QuestionModal = lazy(() => import("./QuestionModal"));
+
 const ContactFAQ: FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -111,20 +114,13 @@ const ContactFAQ: FC = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.button
+                    onClick={() => setIsQuestionModalOpen(true)}
                     className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <MessageCircle className="w-5 h-5" />
                     <span>Hacer Una Pregunta</span>
-                  </motion.button>
-
-                  <motion.button
-                    className="px-8 py-4 rounded-2xl border border-blue-400 text-blue-400 hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:scale-105"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Ver Más FAQs
                   </motion.button>
                 </div>
 
@@ -149,6 +145,13 @@ const ContactFAQ: FC = () => {
           </div>
         </motion.div>
       </div>
+
+      <Suspense fallback={null}>
+        <QuestionModal 
+          isOpen={isQuestionModalOpen} 
+          onClose={() => setIsQuestionModalOpen(false)} 
+        />
+      </Suspense>
     </section>
   );
 };

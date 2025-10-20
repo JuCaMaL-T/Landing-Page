@@ -2,33 +2,57 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowDown } from "lucide-react";
 import { textVariant } from "../landing/Variants";
+import { useState, useEffect, useRef } from "react";
 
 const ServicesHero: FC = () => {
     const title = ["Nuestros ", "Servicios ", "Tecnológicos"];
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
-        <div className="flex w-full min-h-[80vh] px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-24 lg:py-32 relative overflow-hidden items-center justify-center">
+        <div ref={ref} className="flex w-full min-h-[80vh] px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-24 lg:py-32 relative overflow-hidden items-center justify-center">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div
-                    className="absolute top-20 left-10 w-2 h-2 bg-blue-500 rounded-full opacity-60"
-                    animate={{ y: [0, -20, 0], opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                />
-                <motion.div
-                    className="absolute top-40 right-20 w-3 h-3 bg-blue-600 rounded-full opacity-40"
-                    animate={{ y: [0, -30, 0], opacity: [0.4, 0.8, 0.4] }}
-                    transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                />
-                <motion.div
-                    className="absolute bottom-32 left-32 w-1 h-1 bg-blue-700 rounded-full opacity-70"
-                    animate={{ y: [0, -15, 0], opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
-                />
-                <motion.div
-                    className="absolute bottom-20 right-40 w-2 h-2 bg-blue-800 rounded-full opacity-50"
-                    animate={{ y: [0, -25, 0], opacity: [0.5, 0.9, 0.5] }}
-                    transition={{ duration: 3.5, repeat: Infinity, delay: 2 }}
-                />
+                {isVisible && (
+                    <>
+                        <motion.div
+                            className="absolute top-20 left-10 w-2 h-2 bg-blue-500 rounded-full opacity-60"
+                            animate={{ y: [0, -20, 0], opacity: [0.6, 1, 0.6] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                        />
+                        <motion.div
+                            className="absolute top-40 right-20 w-3 h-3 bg-blue-600 rounded-full opacity-40"
+                            animate={{ y: [0, -30, 0], opacity: [0.4, 0.8, 0.4] }}
+                            transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                        />
+                        <motion.div
+                            className="absolute bottom-32 left-32 w-1 h-1 bg-blue-700 rounded-full opacity-70"
+                            animate={{ y: [0, -15, 0], opacity: [0.7, 1, 0.7] }}
+                            transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+                        />
+                        <motion.div
+                            className="absolute bottom-20 right-40 w-2 h-2 bg-blue-800 rounded-full opacity-50"
+                            animate={{ y: [0, -25, 0], opacity: [0.5, 0.9, 0.5] }}
+                            transition={{ duration: 3.5, repeat: Infinity, delay: 2 }}
+                        />
+                    </>
+                )}
             </div>
 
             <div className="flex flex-col items-center text-center max-w-6xl mx-auto w-full relative z-10">
@@ -73,22 +97,6 @@ const ServicesHero: FC = () => {
                     Desde inteligencia artificial hasta desarrollo de software personalizado, 
                     te acompañamos en cada paso de tu transformación digital.
                 </motion.p>
-
-                <motion.div
-                    className="flex flex-col sm:flex-row gap-5 mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 0.8 }}
-                >
-                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
-                        <span>Solicitar Cotización</span>
-                        <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-                    </button>
-
-                    <button className="px-8 py-4 rounded-2xl border border-blue-500 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
-                        Ver Portafolio
-                    </button>
-                </motion.div>
 
                 <motion.div
                     className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-2xl"

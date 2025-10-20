@@ -18,8 +18,7 @@ const Header: FC<Props> = ({}) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full flex items-center justify-between px-7 py-4 z-50 
-      bg-transparent before:content-[''] before:absolute before:inset-0 before:bg-black/20 
-      before:backdrop-blur-md before:-z-10"
+      bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 overflow-hidden"
     >
       <a href="/">
         <img
@@ -45,14 +44,12 @@ const Header: FC<Props> = ({}) => {
 
       <div className="hidden lg:block">
         <div
-          className="group flex items-center justify-center gap-2 px-8 py-3 rounded-2xl 
-                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold 
-                    shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-indigo-500/40"
+          className="group relative w-full flex items-center justify-center gap-3 px-8 py-3 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden"
         >
           <a href="/login">Iniciar Sesión</a>
         </div>
       </div>
-
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
       <div className="lg:hidden">
         <MobileHeader />
       </div>

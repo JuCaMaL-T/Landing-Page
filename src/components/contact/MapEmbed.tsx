@@ -41,7 +41,7 @@ const MapEmbed: FC = () => {
 
           <div className="absolute bottom-4 right-4">
             <div className="bg-black/80 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/10">
-              <p className="text-white text-xs">📍 Mapa interactivo</p>
+              <p className="text-white text-xs">🗺️ Mapa interactivo</p>
             </div>
           </div>
         </div>

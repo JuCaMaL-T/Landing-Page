@@ -1,20 +1,43 @@
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import { ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
 export interface CardProps {
-  icon: React.ElementType;
+  cardIcon: string;
+  imageAlt?: string;
   title: string;
   description: string;
   href?: string;
-  iconClassName?: string;
+  imageClassName?: string;
 }
 
-const Card: FC<CardProps> = ({ icon: Icon, title, description, href, iconClassName= "w-12 h-12 text-indigo-400" }) => {
+const Card: FC<CardProps> = ({ cardIcon, imageAlt = "", title, description, href, imageClassName = "w-12 h-12 object-cover" }) => {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setImageSrc(cardIcon);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [cardIcon]);
+
   return (
-    <div className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-indigo-500/40 via-slate-700/20 to-purple-600/30 hover:from-indigo-600/60 hover:to-purple-700/40 shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 h-full">
+    <div ref={ref} className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-indigo-500/80 via-slate-700/20 to-indigo-500/30 hover:from-indigo-600/60 hover:to-purple-700/40 shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 h-full">
       <div className="bg-black/40 backdrop-blur-lg rounded-2xl p-8 h-full flex flex-col">
-        <div className="mb-6 transform transition-transform duration-300 group-hover:-translate-y-1">
-          <Icon className={iconClassName} />
+        <div className="mb-3 transform transition-transform duration-300 group-hover:-translate-y-1">
+          {imageSrc && <img src={imageSrc} alt={imageAlt} className={imageClassName} />}
         </div>
 
         <h3 className="text-xl font-bold text-white mb-3">{title}</h3>

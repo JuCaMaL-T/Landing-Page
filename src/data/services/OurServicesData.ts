@@ -1,70 +1,68 @@
-import { Brain, Smartphone, Globe, Cpu, Shield, Headphones } from "lucide-react";
-
 export const servicesData = [
   {
-    icon: Brain,
+    iconImage: "/services/icons/6.png",
+    title: "Jucamal SaaS",
+    description: "SaaS diseñado para la gestión administrativa y operativa. Facilita el control de usuarios, recibos y alquiler de maquinaria desde un sistema moderno y seguro.",
+    features: ["Gestión Integral de Usuarios y Roles", "Control de Recibos y Alquiler de Maquinaria", "Entorno Seguro y Escalable", "Interfaz Moderna y Fácil de Usar"],
+    images: [
+      "/services/photos/SaaS1_FS.webp",
+      "/services/photos/SaaS2_FS.webp",
+      "/services/photos/SaaS4_FS.webp"
+    ]
+  },
+  {
+    iconImage: "/services/icons/2.png",
+    title: "Desarrollo a medida",
+    description: "Creamos aplicaciones web y de escritorio robustas, escalables y optimizadas para tu negocio específico.",
+    features: ["Aplicaciones Web", "Sistemas ERP", "APIs Personalizadas", "Integración de Sistemas"],
+    images: [
+      "/services/photos/Develop1.webp",
+      "/services/photos/Develop2.webp",
+      "/services/photos/Develop3.webp"
+    ]
+  },
+  {
+    iconImage: "/services/icons/1.png",
     title: "Inteligencia Artificial",
     description: "Implementamos soluciones de IA personalizadas que automatizan procesos y mejoran la toma de decisiones empresariales.",
     features: ["Machine Learning", "Procesamiento de Lenguaje Natural", "Visión por Computadora", "Análisis Predictivo"],
     images: [
-      "/images/services/ia-1.jpg",
-      "/images/services/ia-2.jpg",
-      "/images/services/ia-3.jpg"
+      "/services/photos/AI1.webp",
+      "/services/photos/AI2.webp",
+      "/services/photos/AI3.webp"
     ]
   },
   {
-    icon: Globe,
-    title: "Desarrollo de Software",
-    description: "Creamos aplicaciones web y de escritorio robustas, escalables y optimizadas para tu negocio específico.",
-    features: ["Aplicaciones Web", "Sistemas ERP", "APIs Personalizadas", "Integración de Sistemas"],
-    images: [
-      "/images/services/software-1.jpg",
-      "/images/services/software-2.jpg",
-      "/images/services/software-3.jpg"
-    ]
-  },
-  {
-    icon: Smartphone,
-    title: "Aplicaciones Móviles",
-    description: "Desarrollamos apps nativas e híbridas para iOS y Android con experiencias de usuario excepcionales.",
-    features: ["Apps Nativas", "Apps Híbridas", "UI/UX Design", "Publicación en Stores"],
-    images: [
-      "/images/services/mobile-1.jpg",
-      "/images/services/mobile-2.jpg",
-      "/images/services/mobile-3.jpg"
-    ]
-  },
-  {
-    icon: Cpu,
+    iconImage: "/services/icons/3.png",
     title: "Consultoría Tech",
     description: "Asesoramos en la transformación digital de tu empresa con estrategias tecnológicas efectivas.",
     features: ["Auditoría Tecnológica", "Estrategia Digital", "Optimización de Procesos", "Plan de Implementación"],
     images: [
-      "/images/services/consultoria-1.jpg",
-      "/images/services/consultoria-2.jpg",
-      "/images/services/consultoria-3.jpg"
+      "/services/photos/Consult1.webp",
+      "/services/photos/Consult2.webp",
+      "/services/photos/Consult3.webp"
     ]
   },
   {
-    icon: Shield,
-    title: "Automatización",
-    description: "Automatizamos procesos repetitivos para aumentar la eficiencia y reducir costos operativos.",
+    iconImage: "/services/icons/4.png",
+    title: "Sistematización",
+    description: "Sistematizamos procesos repetitivos para aumentar la eficiencia y reducir costos operativos.",
     features: ["RPA", "Workflows Automáticos", "Integración de APIs", "Monitoreo Inteligente"],
     images: [
-      "/images/services/automatizacion-1.jpg",
-      "/images/services/automatizacion-2.jpg",
-      "/images/services/automatizacion-3.jpg"
+      "/services/photos/Auto1.webp",
+      "/services/photos/Auto2.webp",
+      "/services/photos/Auto3.webp"
     ]
   },
   {
-    icon: Headphones,
-    title: "Soporte 24/7",
+    iconImage: "/services/icons/5.png",
+    title: "Soporte Técnico",
     description: "Brindamos soporte técnico continuo para garantizar el funcionamiento óptimo de tus sistemas.",
     features: ["Monitoreo Continuo", "Mantenimiento Preventivo", "Soporte Remoto", "Actualizaciones"],
     images: [
-      "/images/services/soporte-1.jpg",
-      "/images/services/soporte-2.jpg",
-      "/images/services/soporte-3.jpg"
+      "/services/photos/Soporte1.webp",
+      "/services/photos/Soporte2.webp",
+      "/services/photos/Soporte3.webp"
     ]
   }
 ];
