@@ -121,7 +121,7 @@ const Hero: FC = () => {
                     <div className="relative w-full" ref={videoRef}>
                     {videoVisible && (
                         <video
-                        src="/Logo-3.webm"
+                        src="/Logo_Final.mp4"
                         autoPlay
                         loop
                         muted
