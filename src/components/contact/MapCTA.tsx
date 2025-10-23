@@ -2,20 +2,22 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { useState, lazy, Suspense } from "react";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const AppointmentModal = lazy(() => import("./AppointmentModal"));
 
 const MapCTA: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
       <motion.div
         className="text-center mt-16 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.6, delay: shouldReduceMotion ? 0 : 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
@@ -44,10 +46,12 @@ const MapCTA: FC = () => {
       </motion.div>
 
       <Suspense fallback={null}>
-        <AppointmentModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
-        />
+        {isModalOpen && (
+          <AppointmentModal 
+            isOpen={isModalOpen} 
+            onClose={() => setIsModalOpen(false)} 
+          />
+        )}
       </Suspense>
     </>
   );

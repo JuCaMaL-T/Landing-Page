@@ -40,7 +40,7 @@ const SoftwareLaunch: FC = () => {
           <span className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 border-b-2 border-l-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-bl-lg"></span>
           <span className="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 border-b-2 border-r-2 border-gray-400 w-6 h-6 sm:w-10 sm:h-10 rounded-br-lg"></span>
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             {images.map((img, idx) => (
               loadedImages.has(idx) && (
                 <motion.img

@@ -1,6 +1,8 @@
 import type { FC } from "react"
 import { motion } from "framer-motion"
-import { Calendar, Image } from "lucide-react"
+import { Calendar, Image as ImageIcon } from "lucide-react"
+import { useIsMobile } from "../hooks/useMediaQuery"
+import { useState, useEffect, useRef } from "react"
 
 type Milestone = {
   year: string
@@ -18,31 +20,61 @@ type TimelineItemProps = {
 
 const TimelineItem: FC<TimelineItemProps> = ({ milestone, index, position = "center" }) => {
   const isCenter = position === "center"
+  const isMobile = useIsMobile()
+  const [imageSrc, setImageSrc] = useState<string | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!milestone.image) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setImageSrc(milestone.image!)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [milestone.image])
 
   return (
     <motion.div
+      ref={ref}
       className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-white/20 via-white/10 to-transparent hover:from-white/30 hover:via-white/20 hover:to-white/5 transition-all duration-500 h-full"
-      whileHover={isCenter ? { y: -5, scale: 1.02 } : {}}
+      whileHover={isCenter && !isMobile ? { y: -5, scale: 1.02 } : {}}
     >
       <div className="bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-lg rounded-2xl overflow-hidden relative h-full">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {milestone.image && (
-          <div className="relative h-64 sm:h-72 overflow-hidden">
-            <img
-              src={milestone.image}
-              alt={milestone.title}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+          <div className="relative h-64 sm:h-72 overflow-hidden bg-gray-900">
+            {imageSrc ? (
+              <img
+                src={imageSrc}
+                alt={milestone.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <ImageIcon className="w-12 h-12 text-gray-600 animate-pulse" />
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute top-4 right-4">
               <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                <Image className="w-4 h-4 text-white/70" />
+                <ImageIcon className="w-4 h-4 text-white/70" />
               </div>
             </div>
           </div>
@@ -70,7 +102,7 @@ const TimelineItem: FC<TimelineItemProps> = ({ milestone, index, position = "cen
               className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: isCenter ? "100%" : "0%" }}
-              transition={{ duration: 1.5, delay: index * 0.2 }}
+              transition={{ duration: 1.2, delay: index * 0.15 }}
               viewport={{ once: true }}
             />
           </div>

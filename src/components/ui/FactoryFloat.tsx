@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Factory } from 'lucide-react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 export default function FactoryFloat() {
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const factoryUrl = 'https://jucamal.com/';
 
   useEffect(() => {
     const tooltipClosed = sessionStorage.getItem('factory-tooltip-closed');
     
-    if (!tooltipClosed) {
+    if (!tooltipClosed && !shouldReduceMotion) {
       setShowTooltip(true);
       
       const timer = setTimeout(() => {
@@ -20,10 +22,10 @@ export default function FactoryFloat() {
       
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [shouldReduceMotion]);
 
   const handleClick = () => {
-    window.open(factoryUrl, '_blank');
+    window.open(factoryUrl, '_blank', 'noopener,noreferrer');
   };
 
   const closeTooltip = () => {
@@ -61,13 +63,17 @@ export default function FactoryFloat() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className="relative group bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-110 active:scale-95 overflow-hidden"
-          aria-label="Visitar Jucamal"
+          aria-label="Visitar Jucamal Ingeniería"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+          {!shouldReduceMotion && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+          )}
           
           <Factory className="w-8 h-8 relative z-10" strokeWidth={2} />
 
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-300 rounded-full border-2 border-white animate-pulse" />
+          {!shouldReduceMotion && (
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-300 rounded-full border-2 border-white animate-pulse" />
+          )}
         </button>
       </div>
 

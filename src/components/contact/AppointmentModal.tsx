@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, User, Mail, Phone, MessageSquare, X, CheckCircle, AlertCircle } from "lucide-react";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 interface AppointmentModalProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Partial<AppointmentData>>({});
+  const shouldReduceMotion = useReducedMotion();
   
   const [formData, setFormData] = useState<AppointmentData>({
     nombre: '',
@@ -112,24 +114,26 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
     return today.toISOString().split('T')[0];
   };
 
+  const backdropAnimation = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.15 } }
+    : { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.3 } };
+
+  const modalAnimation = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.15 } }
+    : { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95, y: 20 }, transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const } };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            {...backdropAnimation}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
             onClick={onClose}
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            {...modalAnimation}
             className="fixed inset-4 md:inset-10 lg:inset-20 z-50 flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
@@ -137,6 +141,7 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={onClose}
                 className="absolute top-6 right-6 z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors"
+                aria-label="Cerrar modal"
               >
                 <X className="w-6 h-6 text-white" />
               </button>
@@ -170,6 +175,7 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
                           errors.nombre ? 'border-red-500' : 'border-gray-600'
                         } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
                         placeholder="Tu nombre completo"
+                        autoComplete="name"
                       />
                       {errors.nombre && (
                         <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -193,6 +199,7 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
                           errors.correo ? 'border-red-500' : 'border-gray-600'
                         } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
                         placeholder="tu@email.com"
+                        autoComplete="email"
                       />
                       {errors.correo && (
                         <p className="text-red-400 text-sm mt-2 flex items-center gap-1">
@@ -217,6 +224,7 @@ const AppointmentModal: FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
                         errors.telefono ? 'border-red-500' : 'border-gray-600'
                       } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
                       placeholder="+57 300 123 4567"
+                      autoComplete="tel"
                     />
                     {errors.telefono && (
                       <p className="text-red-400 text-sm mt-2 flex items-center gap-1">

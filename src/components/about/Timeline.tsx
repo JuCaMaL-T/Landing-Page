@@ -3,10 +3,16 @@ import { motion } from "framer-motion";
 import { milestones } from "../../data/about/AboutData";
 import TimelineItem from "../ui/TimelineItem";
 import { Clock, Code, Zap, Rocket, Star, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const Timeline = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isInView, setIsInView] = useState(false);
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+
+  const showComplexAnimations = !isMobile && !shouldReduceMotion;
 
   const handleNext = () => {
     setCurrentIndex((prev) => Math.min(prev + 1, milestones.length - 1));
@@ -50,7 +56,8 @@ const Timeline = () => {
 
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      {isInView && (
+      
+      {isInView && showComplexAnimations && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             className="absolute bottom-32 right-1/4 w-56 h-56 bg-gradient-to-br from-blue-500/20 to-blue-900/20 rounded-full blur-3xl"
@@ -79,13 +86,13 @@ const Timeline = () => {
             transition={{ duration: 15, repeat: Infinity }}
           />
 
-          {[...Array(12)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-2 h-2 bg-gradient-to-r from-blue-500/40 to-blue-900/40 rounded-full"
               style={{
-                left: `${10 + (i * 8)}%`,
-                top: `${20 + (i * 5)}%`,
+                left: `${10 + (i * 15)}%`,
+                top: `${20 + (i * 10)}%`,
               }}
               animate={{
                 y: [0, -100, 0],
@@ -148,7 +155,7 @@ const Timeline = () => {
         </div>
       )}
 
-      {isInView && (
+      {isInView && showComplexAnimations && (
         <div className="absolute inset-0 pointer-events-none z-5">
           {[
             { icon: Code, position: { top: '15%', left: '15%' }, delay: 0 },
@@ -179,11 +186,11 @@ const Timeline = () => {
 
       <motion.div
         className="max-w-7xl mx-auto text-center mb-16 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         onViewportEnter={() => setIsInView(true)}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: "easeOut" }}
       >
         <div className="flex items-center justify-center gap-2 mb-6">
           <Clock className="w-6 h-6 text-blue-400" />
@@ -213,26 +220,17 @@ const Timeline = () => {
               {getVisibleCards().map((card) => {
                 const { position, data, index } = card;
                 
-                const variants = {
-                  center: {
-                    x: 0,
-                    scale: 1,
-                    opacity: 1,
-                    zIndex: 30,
-                  },
-                  left: {
-                    x: "-110%",
-                    scale: 0.75,
-                    opacity: 0.5,
-                    zIndex: 10,
-                  },
-                  right: {
-                    x: "110%",
-                    scale: 0.75,
-                    opacity: 0.5,
-                    zIndex: 10,
-                  },
-                };
+                const variants = shouldReduceMotion
+                  ? {
+                      center: { x: 0, opacity: 1, zIndex: 30 },
+                      left: { x: "-100%", opacity: 0.5, zIndex: 10 },
+                      right: { x: "100%", opacity: 0.5, zIndex: 10 },
+                    }
+                  : {
+                      center: { x: 0, scale: 1, opacity: 1, zIndex: 30 },
+                      left: { x: "-110%", scale: 0.75, opacity: 0.5, zIndex: 10 },
+                      right: { x: "110%", scale: 0.75, opacity: 0.5, zIndex: 10 },
+                    };
 
                 return (
                   <motion.div
@@ -294,18 +292,18 @@ const Timeline = () => {
 
       <motion.div
         className="text-center relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.6, delay: shouldReduceMotion ? 0 : 0.5 }}
       >
         <div className="max-w-3xl mx-auto">
           <motion.div
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-900/20 border border-blue-500/40 mb-6"
-            animate={{ opacity: [0.7, 1, 0.7] }}
+            animate={!shouldReduceMotion ? { opacity: [0.7, 1, 0.7] } : {}}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
+            <div className={`w-3 h-3 bg-blue-400 rounded-full ${!shouldReduceMotion && 'animate-pulse'}`} />
             <span className="text-blue-400 font-medium">El Viaje Continúa...</span>
           </motion.div>
 
@@ -333,8 +331,9 @@ const Timeline = () => {
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                viewport={{ once: true }}
+                transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, delay: shouldReduceMotion ? 0 : index * 0.1 }}
+                whileHover={!isMobile && !shouldReduceMotion ? { y: -5 } : {}}
               >
                 <div className="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-blue-900 text-transparent bg-clip-text mb-2">
                   {future.value}

@@ -4,7 +4,7 @@ import AboutPage from "../components/react-pages/AboutPage";
 ---
 
 <Layout>
+	<AboutPage.AboutHero client:load />
+    <AboutPage.Timeline client:visible />
 	<AboutPage client:only="react" />
-	<AboutPage.AboutHero client:only="react" />
-    <AboutPage.Timeline client:only="react" />
 </Layout>
