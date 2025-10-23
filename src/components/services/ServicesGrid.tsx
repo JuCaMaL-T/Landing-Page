@@ -2,21 +2,28 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, X } from "lucide-react";
 import { servicesData } from "../../data/services/OurServicesData";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const ServicesGrid = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [loadedIcons, setLoadedIcons] = useState<Set<number>>(new Set());
   const [loadedModalImages, setLoadedModalImages] = useState<Set<string>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+
+  const showFloatingElements = !isMobile && !shouldReduceMotion;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setLoadedIcons(new Set(servicesData.map((_, i) => i)));
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "50px" }
     );
 
     if (gridRef.current) {
@@ -33,27 +40,38 @@ const ServicesGrid = () => {
     }
   };
 
+  const backdropAnimation = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.15 } }
+    : { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.3 } };
+
+  const modalAnimation = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.15 } }
+    : { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95, y: 20 }, transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const } };
+
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-xl"
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-          transition={{ duration: 20, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-40 left-20 w-24 h-24 bg-gradient-to-br from-blue-600/10 to-blue-800/10 rounded-full blur-xl"
-          animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
-          transition={{ duration: 15, repeat: Infinity }}
-        />
-      </div>
+      
+      {showFloatingElements && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-xl"
+            animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
+            transition={{ duration: 20, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute bottom-40 left-20 w-24 h-24 bg-gradient-to-br from-blue-600/10 to-blue-800/10 rounded-full blur-xl"
+            animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
+            transition={{ duration: 15, repeat: Infinity }}
+          />
+        </div>
+      )}
 
       <motion.div
         className="max-w-7xl mx-auto text-center mb-16 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: "easeOut" }}
       >
         <p className="text-sm tracking-widest text-blue-500 uppercase mb-5">
           Servicios Especializados
@@ -77,11 +95,11 @@ const ServicesGrid = () => {
         className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10"
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.2, margin: "-50px" }}
         variants={{
           hidden: {},
           show: {
-            transition: { staggerChildren: 0.15 },
+            transition: { staggerChildren: shouldReduceMotion ? 0.05 : 0.15 },
           },
         }}
       >
@@ -89,10 +107,10 @@ const ServicesGrid = () => {
           <motion.div
             key={i}
             variants={{
-              hidden: { opacity: 0, y: 40 },
+              hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 40 },
               show: { opacity: 1, y: 0 },
             }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: "easeOut" }}
             className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-blue-900/20 hover:from-blue-600/30 hover:to-blue-900/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500"
           >
             <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative rounded-3xl p-8 h-full flex flex-col relative overflow-hidden">
@@ -106,6 +124,10 @@ const ServicesGrid = () => {
                         src={service.iconImage} 
                         alt={`${service.title} icon`}
                         className="w-18 h-18 object-contain"
+                        loading="lazy"
+                        decoding="async"
+                        width="72"
+                        height="72"
                       />
                     )}
                   </div>
@@ -141,9 +163,11 @@ const ServicesGrid = () => {
                   }}
                   className="relative w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000" />
+                  {!shouldReduceMotion && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000" />
+                  )}
                   <span className="relative z-10">Más Información</span>
-                  <ArrowRight className="relative z-10 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  <ArrowRight className={`relative z-10 w-5 h-5 ${!shouldReduceMotion && 'group-hover/btn:translate-x-1'} transition-transform`} />
                 </button>
               </div>
             </div>
@@ -155,19 +179,13 @@ const ServicesGrid = () => {
         {selectedService !== null && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              {...backdropAnimation}
               className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
               onClick={() => setSelectedService(null)}
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              {...modalAnimation}
               className="fixed inset-4 md:inset-10 lg:inset-20 z-50 flex items-center justify-center p-4"
               onClick={(e) => e.stopPropagation()}
             >
@@ -175,6 +193,7 @@ const ServicesGrid = () => {
                 <button
                   onClick={() => setSelectedService(null)}
                   className="absolute top-6 right-6 z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors"
+                  aria-label="Cerrar modal"
                 >
                   <X className="w-6 h-6 text-white" />
                 </button>
@@ -187,6 +206,10 @@ const ServicesGrid = () => {
                           src={servicesData[selectedService].iconImage} 
                           alt={`${servicesData[selectedService].title} icon`}
                           className="w-20 h-20 object-contain"
+                          loading="lazy"
+                          decoding="async"
+                          width="80"
+                          height="80"
                         />
                       )}
                     </div>
@@ -218,7 +241,7 @@ const ServicesGrid = () => {
                       className="mt-auto w-full flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 hover:from-blue-500 hover:to-blue-800 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group"
                     >
                       <span>Pedir Servicio</span>
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className={`w-5 h-5 ${!shouldReduceMotion && 'group-hover:translate-x-1'} transition-transform`} />
                     </a>
                   </div>
 
@@ -233,13 +256,17 @@ const ServicesGrid = () => {
                             <img 
                               src={imageSrc} 
                               alt={`${servicesData[selectedService].title} - Imagen ${index + 1}`}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-110"
+                              className={`w-full h-full object-cover ${!shouldReduceMotion && 'transition-transform duration-300 group-hover/img:scale-110'}`}
+                              loading="lazy"
+                              decoding="async"
                               onError={(e) => {
                                 e.currentTarget.style.display = "none";
                                 (e.currentTarget.nextElementSibling as HTMLElement | null)?.style.setProperty("display", "flex");
                               }}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                            {!shouldReduceMotion && (
+                              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-900/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                            )}
                           </>
                         )}
                         <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-500/10 to-blue-900/10">

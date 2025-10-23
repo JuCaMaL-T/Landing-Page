@@ -11,8 +11,16 @@ export interface CardProps {
   imageClassName?: string;
 }
 
-const Card: FC<CardProps> = ({ cardIcon, imageAlt = "", title, description, href, imageClassName = "w-12 h-12 object-cover" }) => {
+const Card: FC<CardProps> = ({ 
+  cardIcon, 
+  imageAlt = "", 
+  title, 
+  description, 
+  href, 
+  imageClassName = "w-12 h-12 object-cover" 
+}) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,10 +28,14 @@ const Card: FC<CardProps> = ({ cardIcon, imageAlt = "", title, description, href
       ([entry]) => {
         if (entry.isIntersecting) {
           setImageSrc(cardIcon);
+          setIsVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: "50px"
+      }
     );
 
     if (ref.current) {
@@ -34,10 +46,26 @@ const Card: FC<CardProps> = ({ cardIcon, imageAlt = "", title, description, href
   }, [cardIcon]);
 
   return (
-    <div ref={ref} className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-indigo-500/80 via-slate-700/20 to-indigo-500/30 hover:from-indigo-600/60 hover:to-purple-700/40 shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 h-full">
+    <div 
+      ref={ref} 
+      className={`group relative p-[1px] rounded-2xl bg-gradient-to-br from-indigo-500/80 via-slate-700/20 to-indigo-500/30 hover:from-indigo-600/60 hover:to-purple-700/40 shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 h-full ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
+      style={{ transition: 'opacity 0.3s ease-in' }}
+    >
       <div className="bg-black/40 backdrop-blur-lg rounded-2xl p-8 h-full flex flex-col">
         <div className="mb-3 transform transition-transform duration-300 group-hover:-translate-y-1">
-          {imageSrc && <img src={imageSrc} alt={imageAlt} className={imageClassName} />}
+          {imageSrc && (
+            <img 
+              src={imageSrc} 
+              alt={imageAlt} 
+              className={imageClassName}
+              loading="lazy"
+              decoding="async"
+              width="48"
+              height="48"
+            />
+          )}
         </div>
 
         <h3 className="text-xl font-bold text-white mb-3">{title}</h3>

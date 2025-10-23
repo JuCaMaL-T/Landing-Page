@@ -4,8 +4,8 @@ import LandingPage from "../components/react-pages/LandingPage";
 ---
 
 <Layout mesh={true}>
-	<LandingPage client:only="react" />
-	<LandingPage.Hero client:only="react" />
+	<LandingPage.Hero client:visible />
 	<LandingPage.Services client:only="react" />
-	<LandingPage.SoftwareLaunch client:only="react"/>
+	<LandingPage.SoftwareLaunch client:idle/>
+	<LandingPage client:load />
 </Layout>

@@ -4,8 +4,8 @@ import ServicesPage from "../components/react-pages/ServicesPage";
 ---
 
 <Layout>
+	<ServicesPage.ServicesHero client:load />
+	<ServicesPage.ServicesGrid client:visible />
+    <ServicesPage.WorkProcess client:idle />
 	<ServicesPage client:only="react" />
-	<ServicesPage.ServicesHero client:only="react" />
-	<ServicesPage.ServicesGrid client:only="react" />
-    <ServicesPage.WorkProcess client:only="react" />
 </Layout>

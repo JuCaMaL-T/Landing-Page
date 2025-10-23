@@ -1,14 +1,20 @@
 import type { FC } from 'react';
 import { MapPin, Phone, Clock, Mail, Facebook, Instagram, Youtube, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import type { Transition } from "framer-motion";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const Footer: FC = () => {
+    const shouldReduceMotion = useReducedMotion();
+
+    const footerAnimation = shouldReduceMotion
+        ? { initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.3 } }
+        : { initial: { opacity: 0, y: 50 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6, ease: "easeOut" } as Transition };
+
     return (
         <motion.footer
-            initial={{ opacity: 0, y: 200 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
+            {...footerAnimation}
+            viewport={{ once: true, margin: "-100px" }}
             className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden"
         >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
@@ -133,6 +139,8 @@ const Footer: FC = () => {
                                     key={index}
                                     href={social.href}
                                     aria-label={social.label}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-500/20 hover:border-blue-500/30 transition-all duration-200 group"
                                 >
                                     <social.icon className="w-4 h-4 text-gray-400 group-hover:text-blue-400 transition-colors" />

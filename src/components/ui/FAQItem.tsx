@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { useIsMobile } from "../hooks/useMediaQuery";
 
 interface FAQItemProps {
   faq: { question: string; answer: string };
@@ -11,14 +12,15 @@ interface FAQItemProps {
 
 const FAQItem: FC<FAQItemProps> = ({ faq, index, openIndex, toggleFAQ }) => {
   const isOpen = openIndex === index;
+  const isMobile = useIsMobile();
 
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0 },
       }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className="group relative"
     >
       <div
@@ -38,7 +40,7 @@ const FAQItem: FC<FAQItemProps> = ({ faq, index, openIndex, toggleFAQ }) => {
             <motion.button
               onClick={() => toggleFAQ(index)}
               className="w-full text-left p-6 flex items-center justify-between group/button"
-              whileHover={{ scale: isOpen ? 1 : 1.01 }}
+              whileHover={!isMobile ? { scale: isOpen ? 1 : 1.01 } : {}}
               transition={{ duration: 0.2 }}
             >
               <div className="flex items-start gap-4 flex-1">
@@ -79,7 +81,7 @@ const FAQItem: FC<FAQItemProps> = ({ faq, index, openIndex, toggleFAQ }) => {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="overflow-hidden"
                 >
                   <div className="px-6 pb-6">
@@ -88,7 +90,7 @@ const FAQItem: FC<FAQItemProps> = ({ faq, index, openIndex, toggleFAQ }) => {
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -10, opacity: 0 }}
-                        transition={{ duration: 0.3, delay: 0.1 }}
+                        transition={{ duration: 0.2, delay: 0.1 }}
                         className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl p-4"
                       >
                         <p className="text-gray-300 leading-relaxed">
@@ -104,7 +106,7 @@ const FAQItem: FC<FAQItemProps> = ({ faq, index, openIndex, toggleFAQ }) => {
         </div>
       </div>
 
-      {isOpen && (
+      {isOpen && !isMobile && (
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-2xl blur-2xl opacity-20 -z-10" />
       )}
     </motion.div>

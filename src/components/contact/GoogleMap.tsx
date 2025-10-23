@@ -3,29 +3,39 @@ import { motion } from "framer-motion";
 import MapSideBar from "./MapSideBar";
 import MapEmbed from "./MapEmbed";
 import MapCTA from "./MapCTA";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const GoogleMap: FC = () => {
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+
+  const showFloatingElements = !isMobile && !shouldReduceMotion;
+
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }}
-          transition={{ duration: 25, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-32 right-1/4 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-3xl"
-          animate={{ scale: [1.2, 0.8, 1.2], rotate: [360, 180, 0] }}
-          transition={{ duration: 30, repeat: Infinity }}
-        />
-      </div>
+      
+      {showFloatingElements && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-3xl"
+            animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }}
+            transition={{ duration: 25, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute bottom-32 right-1/4 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-blue-900/10 rounded-full blur-3xl"
+            animate={{ scale: [1.2, 0.8, 1.2], rotate: [360, 180, 0] }}
+            transition={{ duration: 30, repeat: Infinity }}
+          />
+        </div>
+      )}
 
       <motion.div
         className="max-w-7xl mx-auto text-center mb-16 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: "easeOut" }}
       >
         <p className="text-sm tracking-widest text-blue-400 uppercase mb-5">
           Nuestra Ubicación
@@ -48,10 +58,10 @@ const GoogleMap: FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <motion.div
             className="lg:col-span-1"
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0.3, margin: "-50px" }}
+            transition={{ duration: shouldReduceMotion ? 0.3 : 0.6 }}
           >
             <MapSideBar />
           </motion.div>

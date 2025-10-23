@@ -2,17 +2,30 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Navigation } from "lucide-react";
 import { contactInfo } from "../../data/contact/ContactData";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const ContactInfoSidebar: FC = () => {
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+
+  const cardAnimation = shouldReduceMotion || isMobile
+    ? { initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.3 } }
+    : {
+        initial: { opacity: 0, x: -40 },
+        whileInView: { opacity: 1, x: 0 },
+        transition: { duration: 0.6 }
+      };
+
+  const hoverProps = !isMobile && !shouldReduceMotion ? { whileHover: { y: -5 } } : {};
+
   return (
     <div className="space-y-6">
       <motion.div
         className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
-        whileHover={{ y: -5 }}
-        initial={{ opacity: 0, x: -40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        {...hoverProps}
+        {...cardAnimation}
+        viewport={{ once: true, margin: "-50px" }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -37,11 +50,11 @@ const ContactInfoSidebar: FC = () => {
 
       <motion.div
         className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
-        whileHover={{ y: -5 }}
-        initial={{ opacity: 0, x: -40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        {...hoverProps}
+        initial={cardAnimation.initial}
+        whileInView={cardAnimation.whileInView}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ ...cardAnimation.transition, delay: shouldReduceMotion ? 0 : 0.1 }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -65,11 +78,11 @@ const ContactInfoSidebar: FC = () => {
 
       <motion.div
         className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
-        whileHover={{ y: -5 }}
-        initial={{ opacity: 0, x: -40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.4 }}
+        {...hoverProps}
+        initial={cardAnimation.initial}
+        whileInView={cardAnimation.whileInView}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ ...cardAnimation.transition, delay: shouldReduceMotion ? 0 : 0.2 }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -98,10 +111,10 @@ const ContactInfoSidebar: FC = () => {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.3 : 0.4, delay: shouldReduceMotion ? 0 : 0.3 }}
       >
         <a
           href={`https://www.google.com/maps/dir//${encodeURIComponent(contactInfo.address.full)}`}
@@ -109,7 +122,7 @@ const ContactInfoSidebar: FC = () => {
           rel="noopener noreferrer"
           className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"
         >
-          <Navigation className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+          <Navigation className={`w-5 h-5 ${!shouldReduceMotion && 'group-hover:rotate-12'} transition-transform`} />
           <span>Obtener Direcciones</span>
         </a>
       </motion.div>

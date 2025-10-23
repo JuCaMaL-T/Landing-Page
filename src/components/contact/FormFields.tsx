@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 import { Send, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
 import type { FormData } from "../hooks/useContactForm";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 interface FormFieldsProps {
   formData: FormData;
@@ -20,6 +21,15 @@ const FormFields: FC<FormFieldsProps> = ({
   onSubmit,
   onChange
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  const fieldAnimation = (delay: number) => ({
+    initial: { opacity: 0, x: shouldReduceMotion ? 0 : -20 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true, margin: "-50px" },
+    transition: { duration: shouldReduceMotion ? 0.2 : 0.4, delay: shouldReduceMotion ? 0 : delay }
+  });
+
   return (
     <form 
       onSubmit={onSubmit} 
@@ -28,11 +38,7 @@ const FormFields: FC<FormFieldsProps> = ({
       className="space-y-8"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
+        <motion.div {...fieldAnimation(0.1)}>
           <label className="block text-white font-semibold mb-3">
             <User className="inline w-4 h-4 mr-2" />
             NOMBRE *
@@ -47,6 +53,7 @@ const FormFields: FC<FormFieldsProps> = ({
                 errors.nombre ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="Tu nombre completo"
+              autoComplete="name"
               required
             />
             {errors.nombre && (
@@ -58,11 +65,7 @@ const FormFields: FC<FormFieldsProps> = ({
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
+        <motion.div {...fieldAnimation(0.15)}>
           <label className="block text-white font-semibold mb-3">
             <Mail className="inline w-4 h-4 mr-2" />
             CORREO *
@@ -77,6 +80,7 @@ const FormFields: FC<FormFieldsProps> = ({
                 errors.correo ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="tu@email.com"
+              autoComplete="email"
               required
             />
             {errors.correo && (
@@ -90,11 +94,7 @@ const FormFields: FC<FormFieldsProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <motion.div {...fieldAnimation(0.2)}>
           <label className="block text-white font-semibold mb-3">
             <Phone className="inline w-4 h-4 mr-2" />
             NÚMERO *
@@ -109,6 +109,7 @@ const FormFields: FC<FormFieldsProps> = ({
                 errors.numero ? 'border-red-500' : 'border-gray-600'
               } rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors`}
               placeholder="+57 300 123 4567"
+              autoComplete="tel"
               required
             />
             {errors.numero && (
@@ -120,11 +121,7 @@ const FormFields: FC<FormFieldsProps> = ({
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
+        <motion.div {...fieldAnimation(0.25)}>
           <label className="block text-white font-semibold mb-3">
             <MessageSquare className="inline w-4 h-4 mr-2" />
             ASUNTO *
@@ -151,11 +148,7 @@ const FormFields: FC<FormFieldsProps> = ({
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-      >
+      <motion.div {...fieldAnimation(0.3)}>
         <label className="block text-white font-semibold mb-3">
           <MessageSquare className="inline w-4 h-4 mr-2" />
           MENSAJE *
@@ -183,9 +176,10 @@ const FormFields: FC<FormFieldsProps> = ({
 
       <motion.div
         className="text-center pt-6"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: shouldReduceMotion ? 0.2 : 0.4, delay: shouldReduceMotion ? 0 : 0.35 }}
       >
         <button
           type="submit"
@@ -207,7 +201,7 @@ const FormFields: FC<FormFieldsProps> = ({
             </>
           ) : (
             <>
-              <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Send className={`w-5 h-5 ${!shouldReduceMotion && 'group-hover:translate-x-1'} transition-transform`} />
               <span>ENVIAR</span>
             </>
           )}
