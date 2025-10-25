@@ -2,20 +2,38 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, X } from "lucide-react";
 import { servicesData } from "../../data/services/OurServicesData";
-import { useIsMobile } from "../hooks/useMediaQuery";
+import { useIsAnyMobile } from "../hooks/useMediaQuery";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const ServicesGrid = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [loadedIcons, setLoadedIcons] = useState<Set<number>>(new Set());
   const [loadedModalImages, setLoadedModalImages] = useState<Set<string>>(new Set());
+  const [mounted, setMounted] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
+  
+  const isMobile = useIsAnyMobile();
   const shouldReduceMotion = useReducedMotion();
 
-  const showFloatingElements = !isMobile && !shouldReduceMotion;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const showFloatingElements = mounted && !isMobile && !shouldReduceMotion;
 
   useEffect(() => {
+    if (!mounted) return;
+    
+    const isVerySmallScreen = window.innerWidth < 400 || window.innerHeight < 900;
+    
+    if (isMobile || isVerySmallScreen) {
+      setLoadedIcons(new Set(servicesData.map((_, i) => i)));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,7 +41,10 @@ const ServicesGrid = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "50px" }
+      { 
+        threshold: 0.01,
+        rootMargin: "100px"
+      }
     );
 
     if (gridRef.current) {
@@ -31,7 +52,7 @@ const ServicesGrid = () => {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile, mounted]);
 
   const loadModalImages = (serviceIndex: number) => {
     const service = servicesData[serviceIndex];
@@ -47,6 +68,69 @@ const ServicesGrid = () => {
   const modalAnimation = shouldReduceMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.15 } }
     : { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95, y: 20 }, transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const } };
+
+  if (!mounted) {
+    return (
+      <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
+        <div className="max-w-7xl mx-auto text-center mb-16 relative z-10">
+          <p className="text-sm tracking-widest text-blue-500 uppercase mb-5">
+            Servicios Especializados
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
+            Transformamos Tu{" "}
+            <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
+              Negocio
+            </span>
+          </h2>
+          <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Ofrecemos soluciones tecnológicas integrales diseñadas para impulsar 
+            el crecimiento y la innovación en tu empresa.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10 w-full">
+          {servicesData.map((service, i) => (
+            <div key={i} className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-blue-900/20 shadow-xl">
+              <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative rounded-3xl p-6 sm:p-8 h-full flex flex-col overflow-hidden">
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 p-3">
+                      <img 
+                        src={service.iconImage} 
+                        alt={`${service.title} icon`}
+                        className="w-12 h-12 sm:w-16 sm:h-16 lg:w-18 lg:h-18 object-contain"
+                        width="72"
+                        height="72"
+                      />
+                    </div>
+                    <span className="text-xs text-blue-500 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
+                      Popular
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed flex-grow text-sm sm:text-base">
+                    {service.description}
+                  </p>
+                  <div className="space-y-3 mb-8">
+                    <p className="text-sm font-semibold text-blue-500 mb-3">Incluye:</p>
+                    {service.features.map((feature, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-3 h-3 text-blue-400" />
+                        </div>
+                        <span className="text-gray-300 text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 relative bg-slate-950 min-h-screen">
@@ -92,10 +176,14 @@ const ServicesGrid = () => {
 
       <motion.div
         ref={gridRef}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10 w-full"
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2, margin: "-50px" }}
+        viewport={{ 
+          once: true, 
+          amount: 0.1,
+          margin: "-20px"
+        }}
         variants={{
           hidden: {},
           show: {
@@ -113,22 +201,27 @@ const ServicesGrid = () => {
             transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: "easeOut" }}
             className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-blue-500/20 via-slate-700/20 to-blue-900/20 hover:from-blue-600/30 hover:to-blue-900/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500"
           >
-            <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative rounded-3xl p-8 h-full flex flex-col relative overflow-hidden">
+            <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative rounded-3xl p-6 sm:p-8 h-full flex flex-col overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-6">
-                  <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1">
-                    {loadedIcons.has(i) && (
+                  <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 transform transition-transform duration-300 group-hover:-translate-y-1 p-3">
+                    {loadedIcons.has(i) ? (
                       <img 
                         src={service.iconImage} 
                         alt={`${service.title} icon`}
-                        className="w-18 h-18 object-contain"
-                        loading="lazy"
+                        className="w-12 h-12 sm:w-16 sm:h-16 lg:w-18 lg:h-18 object-contain"
+                        loading="eager"
                         decoding="async"
                         width="72"
                         height="72"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
                       />
+                    ) : (
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-18 lg:h-18 bg-blue-500/10 animate-pulse rounded" />
                     )}
                   </div>
                   <span className="text-xs text-blue-500 font-medium px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
@@ -136,11 +229,11 @@ const ServicesGrid = () => {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-100 transition-colors">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 group-hover:text-blue-100 transition-colors">
                   {service.title}
                 </h3>
 
-                <p className="text-gray-300 mb-6 leading-relaxed flex-grow">
+                <p className="text-gray-300 mb-6 leading-relaxed flex-grow text-sm sm:text-base">
                   {service.description}
                 </p>
 
@@ -161,7 +254,7 @@ const ServicesGrid = () => {
                     setSelectedService(i);
                     loadModalImages(i);
                   }}
-                  className="relative w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden"
+                  className="relative w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden active:scale-95"
                 >
                   {!shouldReduceMotion && (
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000" />
@@ -192,21 +285,21 @@ const ServicesGrid = () => {
               <div className="relative w-full max-w-7xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-black/95 to-black/90 backdrop-blur-xl rounded-3xl border border-blue-500/20 shadow-2xl">
                 <button
                   onClick={() => setSelectedService(null)}
-                  className="absolute top-6 right-6 z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors"
+                  className="sticky top-4 left-[calc(100%-3rem)] z-10 p-2 rounded-full bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 transition-colors active:scale-90"
                   aria-label="Cerrar modal"
                 >
                   <X className="w-6 h-6 text-white" />
                 </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 sm:p-8 lg:p-12">
                   <div className="flex flex-col">
-                    <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6">
+                    <div className="rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/30 w-fit mb-6 p-3">
                       {loadedIcons.has(selectedService) && (
                         <img 
                           src={servicesData[selectedService].iconImage} 
                           alt={`${servicesData[selectedService].title} icon`}
-                          className="w-20 h-20 object-contain"
-                          loading="lazy"
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                          loading="eager"
                           decoding="async"
                           width="80"
                           height="80"
@@ -214,11 +307,11 @@ const ServicesGrid = () => {
                       )}
                     </div>
 
-                    <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
                       {servicesData[selectedService].title}
                     </h2>
 
-                    <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                    <p className="text-gray-300 mb-8 leading-relaxed text-base sm:text-lg">
                       {servicesData[selectedService].description}
                     </p>
 
@@ -231,14 +324,14 @@ const ServicesGrid = () => {
                           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-900/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0">
                             <Check className="w-4 h-4 text-blue-400" />
                           </div>
-                          <span className="text-gray-300">{feature}</span>
+                          <span className="text-gray-300 text-sm sm:text-base">{feature}</span>
                         </div>
                       ))}
                     </div>
 
                     <a
                       href="/contact"
-                      className="mt-auto w-full flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 hover:from-blue-500 hover:to-blue-800 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group"
+                      className="mt-auto w-full flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 hover:from-blue-500 hover:to-blue-800 text-white font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 active:scale-95 group"
                     >
                       <span>Pedir Servicio</span>
                       <ArrowRight className={`w-5 h-5 ${!shouldReduceMotion && 'group-hover:translate-x-1'} transition-transform`} />
@@ -249,7 +342,7 @@ const ServicesGrid = () => {
                     {servicesData[selectedService].images?.map((imageSrc, index) => (
                       <div 
                         key={index}
-                        className="relative h-54 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
+                        className="relative h-48 sm:h-54 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-900/10 border border-blue-500/20 overflow-hidden group/img"
                       >
                         {loadedModalImages.has(imageSrc) && (
                           <>

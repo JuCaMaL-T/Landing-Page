@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { containerVariants, itemVariants } from "./Variants";
 
 const SoftwareLaunch: FC = () => {
-  const images = ["/services/photos/SaaS1_FS.webp", "/services/photos/SaaS2_FS.webp", "/services/photos/SaaS3_FS.webp", "/services/photos/SaaS4_FS.webp", "/services/photos/SaaS5_FS.webp"];
+  const images = ["https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Services/SaaS1_FS.webp", "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Services/SaaS2_FS.webp", "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Services/SaaS3_FS.webp", "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Services/SaaS4_FS.webp", "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Services/SaaS5_FS.webp"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0, 1]));
 
@@ -76,28 +76,28 @@ const SoftwareLaunch: FC = () => {
             {React.Children.map(
               [
                 <Card
-                  cardIcon="/services/icons/7.png"
+                  cardIcon="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/7.png"
                   imageAlt="Experiencia Ágil"
                   imageClassName="w-20 h-20 object-contain"
                   title="Experiencia Ágil"
                   description="Interfaz moderna y rápida, pensada para optimizar tu flujo de trabajo."
                 />,
                 <Card
-                  cardIcon="/services/icons/8.png"
+                  cardIcon="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/8.png"
                   imageAlt="Gestión Modular"
                   imageClassName="w-20 h-20 object-contain"
                   title="Gestión Modular"
                   description="Administra usuarios, roles y maquinaria en módulos simples y eficientes."
                 />,
                 <Card
-                  cardIcon="/services/icons/9.png"
+                  cardIcon="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/9.png"
                   imageAlt="Sistematización"
                   imageClassName="w-20 h-20 object-contain"
                   title="Sistematización"
                   description="Automatiza tareas clave y reduce el tiempo en procesos administrativos."
                 />,
                 <Card
-                  cardIcon="/services/icons/10.png"
+                  cardIcon="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/10.png"
                   imageAlt="Seguridad Avanzada"
                   imageClassName="w-20 h-20 object-contain"
                   title="Seguridad Avanzada"
