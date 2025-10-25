@@ -117,7 +117,7 @@ const ContactInfoSidebar: FC = () => {
         transition={{ duration: shouldReduceMotion ? 0.3 : 0.4, delay: shouldReduceMotion ? 0 : 0.3 }}
       >
         <a
-          href={`https://www.google.com/maps/dir//${encodeURIComponent(contactInfo.address.full)}`}
+          href="https://www.google.com/maps/place/Jucamal+Ingenier%C3%ADa+%26+Construcciones/@7.9052892,-72.4923993,21z/data=!4m6!3m5!1s0x8e6645d98bd1d5bb:0x6dbf116d3fa5fd1e!8m2!3d7.9052625!4d-72.4922575!16s%2Fg%2F11flvqg4q0?entry=ttu&g_ep=EgoyMDI1MTAyMC4wIKXMDSoASAFQAw%3D%3D"
           target="_blank"
           rel="noopener noreferrer"
           className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"

@@ -28,7 +28,7 @@ const Header: FC<Props> = ({}) => {
     >
       <a href="/" aria-label="Ir a inicio">
         <img
-          src="/Logo.webp"
+          src="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo.webp"
           alt="Jucamal Tecnología"
           className="w-28 object-cover"
           width="112"

@@ -128,11 +128,11 @@ const Hero: FC = () => {
                                 loop
                                 muted
                                 playsInline
-                                poster="/Logo-poster.webp"
+                                poster="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo-poster.webp"
                                 className="w-full h-auto rounded-2xl shadow-2xl shadow-blue-500/20"
                             >
-                                <source src="/Logo.webm" type="video/webm" />
-                                <img src="/Logo-poster.webp" alt="Jucamal Logo" />
+                                <source src="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo.webm" type="video/webm" />
+                                <img src="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo-poster.webp" alt="Jucamal Logo" />
                             </video>
                         </Tilt>
                     ) : (
@@ -142,11 +142,11 @@ const Hero: FC = () => {
                                 loop
                                 muted
                                 playsInline
-                                poster="/Logo-poster.webp"
+                                poster="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo-poster.webp"
                                 className="w-full h-auto rounded-2xl shadow-2xl shadow-blue-500/20"
                             >
-                                <source src="/Logo.webm" type="video/webm" />
-                                <img src="/Logo-poster.webp" alt="Jucamal Logo" />
+                                <source src="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo.webm" type="video/webm" />
+                                <img src="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Landing/Logo-poster.webp" alt="Jucamal Logo" />
                             </video>
                         </div>
                     )}
