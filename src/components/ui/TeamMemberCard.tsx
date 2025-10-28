@@ -1,16 +1,12 @@
 import type { FC } from "react";
 import { motion } from "framer-motion";
-import { Star, Award, Code } from "lucide-react";
+import { Star } from "lucide-react";
 
 export type TeamMember = {
   name: string;
   role: string;
   speciality: string;
   image: string;
-  bio: string;
-  skills: string[];
-  experience: string;
-  projects: string;
   gradient: string;
 };
 
@@ -36,10 +32,10 @@ const TeamMemberCard: FC<TeamMemberCardProps> = ({ member, index }) => {
           />
 
           <div className="relative z-10">
-            <div className="relative mb-6 flex justify-center">
+            <div className="relative mb-8 flex justify-center">
               <div className="relative">
                 <motion.div
-                  className={`w-24 h-24 rounded-full bg-gradient-to-r ${member.gradient} p-1`}
+                  className={`w-32 h-32 rounded-full bg-gradient-to-r ${member.gradient} p-1`}
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -70,55 +66,18 @@ const TeamMemberCard: FC<TeamMemberCardProps> = ({ member, index }) => {
               </div>
             </div>
 
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-100 transition-colors">
+            <div className="text-center space-y-3">
+              <h3 className="text-2xl font-bold text-white group-hover:text-blue-100 transition-colors">
                 {member.name}
               </h3>
-              <p className="text-sm font-semibold text-blue-400 bg-clip-text mb-1">
-                {member.role}
-              </p>
-              <p className="text-gray-400 text-xs">{member.speciality}</p>
-            </div>
-
-            <p className="text-gray-300 text-sm leading-relaxed mb-6 text-center">
-              {member.bio}
-            </p>
-
-            <div className="mb-6">
-              <div className="flex flex-wrap gap-2 justify-center">
-                {member.skills.map((skill, i) => (
-                  <motion.span
-                    key={i}
-                    className="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/20 text-gray-300"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: i * 0.1 }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-700/50">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Award className="w-3 h-3 text-blue-400" />
-                  <span className="text-blue-400 font-bold text-sm">
-                    {member.experience}
-                  </span>
-                </div>
-                <p className="text-gray-400 text-xs">Experiencia</p>
-              </div>
-
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Code className="w-3 h-3 text-purple-400" />
-                  <span className="text-purple-400 font-bold text-sm">
-                    {member.projects}
-                  </span>
-                </div>
-                <p className="text-gray-400 text-xs">Proyectos</p>
+              
+              <div className="space-y-2">
+                <p className="text-base font-semibold text-blue-400">
+                  {member.role}
+                </p>
+                <p className="text-gray-300 text-sm font-medium bg-white/5 inline-block px-4 py-2 rounded-full border border-white/10">
+                  {member.speciality}
+                </p>
               </div>
             </div>
           </div>

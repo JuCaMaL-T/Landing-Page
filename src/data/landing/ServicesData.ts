@@ -10,7 +10,7 @@ export const services: CardProps[] = [
   },
   {
     cardIcon: "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/2.png",
-    title: "Desarrollo de Software",
+    title: "Desarrollo a Medida",
     description:
       "Creamos aplicaciones personalizadas, seguras y escalables que transforman tus ideas en productos digitales reales.",
     href: "/services",

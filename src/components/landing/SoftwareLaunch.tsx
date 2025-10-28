@@ -60,13 +60,13 @@ const SoftwareLaunch: FC = () => {
 
         <motion.div variants={itemVariants}>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-snug">
-            <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text text-transparent animate-gradient-x">
+            <span className="bg-white text-transparent bg-clip-text text-transparent animate-gradient-x">
               Nuestro Lanzamiento
             </span>{" "}
             Más Reciente
           </h2>
           <p className="text-gray-300 mb-6 text-sm sm:text-base">
-            <strong>Plataforma Jucamal 2.0</strong> es un sistema SaaS para la gestión administrativa y operativa en empresas de construcción. Permite manejar usuarios, roles, recibos y alquiler de maquinaria desde una plataforma moderna, segura y fácil de usar.
+            <strong>Plataforma Jucamal 2.0</strong> es un sistema SaaS para la gestión administrativa y operativa de las empresas.
           </p>
 
           <motion.div
@@ -87,7 +87,7 @@ const SoftwareLaunch: FC = () => {
                   imageAlt="Gestión Modular"
                   imageClassName="w-20 h-20 object-contain"
                   title="Gestión Modular"
-                  description="Administra usuarios, roles y maquinaria en módulos simples y eficientes."
+                  description="Administra usuarios y roles en módulos simples y eficientes."
                 />,
                 <Card
                   cardIcon="https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/9.png"
@@ -113,6 +113,7 @@ const SoftwareLaunch: FC = () => {
           </motion.div>
 
           <motion.button
+            onClick={() => window.open("https://jucamaltecnologia.com/", "_blank")}
             className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-gray-500 hover:from-blue-600 hover:via-blue-700 hover:to-blue-900 text-white font-semibold transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/30 group/btn overflow-hidden sm:text-base"
             variants={itemVariants}
           >

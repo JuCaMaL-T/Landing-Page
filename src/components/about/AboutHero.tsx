@@ -117,25 +117,6 @@ const AboutHero: FC = () => {
                 </motion.p>
 
                 <motion.div
-                    className="flex flex-col sm:flex-row gap-6 mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.5 }}
-                >
-                    <button className="group flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40">
-                        <Users className="w-5 h-5 group-hover:animate-pulse" />
-                        <span>Conocer al Equipo</span>
-                    </button>
-
-                    <button className="group px-8 py-4 rounded-2xl border border-blue-600 text-white hover:bg-blue-900/30 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105">
-                        <span className="flex items-center gap-2">
-                            <Rocket className="w-5 h-5 group-hover:translate-y-[-2px] transition-transform" />
-                            Nuestra Historia
-                        </span>
-                    </button>
-                </motion.div>
-
-                <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-4xl"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -20,6 +20,7 @@ export default Object.assign(
     AboutPanel,
     {
         AboutHero,
+        Team,
         Timeline
     }
 )

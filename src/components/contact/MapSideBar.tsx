@@ -9,13 +9,20 @@ const ContactInfoSidebar: FC = () => {
   const isMobile = useIsMobile();
   const shouldReduceMotion = useReducedMotion();
 
-  const cardAnimation = shouldReduceMotion || isMobile
-    ? { initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.3 } }
-    : {
-        initial: { opacity: 0, x: -40 },
-        whileInView: { opacity: 1, x: 0 },
-        transition: { duration: 0.6 }
+  const getCardAnimation = (delay: number = 0) => {
+    if (shouldReduceMotion || isMobile) {
+      return {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        transition: { duration: 0.3 }
       };
+    }
+    return {
+      initial: { opacity: 0, y: 20 },
+      whileInView: { opacity: 1, y: 0 },
+      transition: { duration: 0.5, delay }
+    };
+  };
 
   const hoverProps = !isMobile && !shouldReduceMotion ? { whileHover: { y: -5 } } : {};
 
@@ -24,7 +31,7 @@ const ContactInfoSidebar: FC = () => {
       <motion.div
         className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
         {...hoverProps}
-        {...cardAnimation}
+        {...getCardAnimation(0)}
         viewport={{ once: true, margin: "-50px" }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
@@ -51,10 +58,8 @@ const ContactInfoSidebar: FC = () => {
       <motion.div
         className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
         {...hoverProps}
-        initial={cardAnimation.initial}
-        whileInView={cardAnimation.whileInView}
+        {...getCardAnimation(0.1)}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ ...cardAnimation.transition, delay: shouldReduceMotion ? 0 : 0.1 }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -77,12 +82,10 @@ const ContactInfoSidebar: FC = () => {
       </motion.div>
 
       <motion.div
-        className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500"
+        className="group relative p-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-900/20 hover:from-blue-500/30 hover:to-blue-900/30 transition-all duration-500 mb-8"
         {...hoverProps}
-        initial={cardAnimation.initial}
-        whileInView={cardAnimation.whileInView}
+        {...getCardAnimation(0.2)}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ ...cardAnimation.transition, delay: shouldReduceMotion ? 0 : 0.2 }}
       >
         <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-lg rounded-2xl p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -111,10 +114,10 @@ const ContactInfoSidebar: FC = () => {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+        initial={{ opacity: 0, y: shouldReduceMotion || isMobile ? 0 : 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: shouldReduceMotion ? 0.3 : 0.4, delay: shouldReduceMotion ? 0 : 0.3 }}
+        transition={{ duration: shouldReduceMotion || isMobile ? 0.3 : 0.4, delay: shouldReduceMotion || isMobile ? 0 : 0.3 }}
       >
         <a
           href="https://www.google.com/maps/place/Jucamal+Ingenier%C3%ADa+%26+Construcciones/@7.9052892,-72.4923993,21z/data=!4m6!3m5!1s0x8e6645d98bd1d5bb:0x6dbf116d3fa5fd1e!8m2!3d7.9052625!4d-72.4922575!16s%2Fg%2F11flvqg4q0?entry=ttu&g_ep=EgoyMDI1MTAyMC4wIKXMDSoASAFQAw%3D%3D"
@@ -122,7 +125,7 @@ const ContactInfoSidebar: FC = () => {
           rel="noopener noreferrer"
           className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-900 text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40"
         >
-          <Navigation className={`w-5 h-5 ${!shouldReduceMotion && 'group-hover:rotate-12'} transition-transform`} />
+          <Navigation className={`w-5 h-5 ${!shouldReduceMotion && !isMobile && 'group-hover:rotate-12'} transition-transform`} />
           <span>Obtener Direcciones</span>
         </a>
       </motion.div>

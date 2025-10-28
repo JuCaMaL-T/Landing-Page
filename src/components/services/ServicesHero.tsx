@@ -103,7 +103,7 @@ const ServicesHero: FC = () => {
                     te acompañamos en cada paso de tu transformación digital.
                 </motion.p>
 
-                <motion.div
+                {/* <motion.div
                     className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-2xl"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ const ServicesHero: FC = () => {
                         <div className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2">24/7</div>
                         <div className="text-gray-400 text-sm">Soporte Técnico</div>
                     </div>
-                </motion.div>
+                </motion.div> */}
             </div>
         </div>
     );

@@ -37,7 +37,7 @@ const Team: FC = () => {
           <span className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text">
             Mentes Brillantes
           </span>{" "}
-          Detrás de JUCAMAL
+          Detrás de JUCAMAL Tecnología
         </h2>
 
         <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -47,7 +47,7 @@ const Team: FC = () => {
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative z-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-7xl mx-auto relative z-10"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
@@ -77,7 +77,7 @@ const Team: FC = () => {
             a Nosotros?
           </h3>
           
-          <p className="text-gray-300 mb-8">
+          <p className="sm:text-lg lg:text-xl text-gray-300 mb-8">
             Siempre estamos buscando talento excepcional que comparta nuestra pasión 
             por la innovación tecnológica.
           </p>

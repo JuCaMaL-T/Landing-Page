@@ -12,7 +12,7 @@ export const servicesData = [
   },
   {
     iconImage: "https://cdn.jsdelivr.net/gh/DavidMRB/assets-web@main/Icons/2.png",
-    title: "Desarrollo a medida",
+    title: "Desarrollo a Medida",
     description: "Creamos aplicaciones web y de escritorio robustas, escalables y optimizadas para tu negocio específico.",
     features: ["Aplicaciones Web", "Sistemas ERP", "APIs Personalizadas", "Integración de Sistemas"],
     images: [

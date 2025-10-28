@@ -7,7 +7,7 @@ import { useIsMobile } from "../hooks/useMediaQuery";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const Hero: FC = () => {
-    const title = ["TU TRANSFORMACION ", "DIGITAL ", "COMIENZA AQUI"];
+    const title = ["TU ", "TRANSFORMACION DIGITAL ", "COMIENZA AQUI:"];
     const isMobile = useIsMobile();
     const shouldReduceMotion = useReducedMotion();
 
@@ -30,7 +30,7 @@ const Hero: FC = () => {
     };
 
     return (
-        <div className="flex w-full min-h-[85vh] lg:min-h-screen px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-8 sm:py-12 md:py-14 lg:py-16 relative overflow-hidden">
+        <div className="flex w-full min-h-[85vh] lg:min-h-screen px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-8 sm:py-12 md:py-14 lg:py-26 relative overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center max-w-7xl mx-auto w-full relative z-10">
 
                 <div className="flex flex-col justify-center text-left order-2 md:order-1">
@@ -47,8 +47,8 @@ const Hero: FC = () => {
                                 initial={shouldSimplify ? { opacity: 1, y: 0 } : "hidden"}
                                 animate={shouldSimplify ? { opacity: 1, y: 0 } : "visible"}
                                 className={
-                                    word.includes("DIGITAL")
-                                        ? "bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900 text-transparent bg-clip-text"
+                                    word.includes("TRANSFORMACION DIGITAL")
+                                        ? "bg-white text-transparent bg-clip-text"
                                         : ""
                                 }
                             >
@@ -63,13 +63,11 @@ const Hero: FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: shouldSimplify ? 0.2 : 0.5, duration: shouldSimplify ? 0.3 : 0.8 }}
                     >
-                        En Jucamal Tecnología impulsamos el crecimiento de tu empresa
-                        con soluciones inteligentes que transforman la forma de trabajar
-                        y crecer.
+                        En Jucamal Tecnología desarrollamos soluciones inteligentes y eficientes que optimizan procesos, impulsan la innovación y fortalecen el crecimiento sostenible de tu empresa.
                         <span className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-400 to-transparent opacity-30"></span>
                     </motion.p>
 
-                    <motion.div
+                    {/* <motion.div
                         className="flex gap-4 md:gap-6 mb-8 md:mb-10 flex-wrap md:flex-nowrap"
                         initial={{ opacity: 0, y: shouldSimplify ? 10 : 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -89,7 +87,7 @@ const Hero: FC = () => {
                             <div className="text-lg sm:text-xl md:text-2xl font-bold text-white">24/7</div>
                             <div className="text-sm md:text-base text-white">Soporte</div>
                         </div>
-                    </motion.div>
+                    </motion.div>  */}
 
                     <motion.div
                         className="flex flex-col sm:flex-row gap-4 md:gap-5"

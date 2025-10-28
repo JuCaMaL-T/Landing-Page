@@ -28,7 +28,7 @@ const MapCTA: FC = () => {
             con Nosotros?
           </h3>
           
-          <p className="text-gray-300 mb-6">
+          <p className="sm:text-lg lg:text-xl text-gray-300 mb-6">
             Agenda una cita previa para garantizar que podamos dedicarte todo nuestro tiempo 
             y atención. Nuestras oficinas están diseñadas para hacer de tu visita una experiencia cómoda.
           </p>

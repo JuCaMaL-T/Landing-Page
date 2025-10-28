@@ -116,7 +116,7 @@ const ContactFAQ: FC = () => {
                   ?
                 </h3>
 
-                <p className="text-gray-300 mb-8 leading-relaxed">
+                <p className="sm:text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
                   Nuestro equipo de expertos está listo para resolver cualquier duda específica 
                   sobre tu proyecto. No hay pregunta demasiado técnica o demasiado simple.
                 </p>

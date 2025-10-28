@@ -314,7 +314,7 @@ const Timeline = () => {
             </span>
           </h3>
 
-          <p className="text-gray-300 leading-relaxed mb-8">
+          <p className="sm:text-lg lg:text-xl text-gray-300 leading-relaxed mb-8">
             Cada día escribimos nuevos capítulos en nuestra historia. Con cada proyecto,
             cada innovación y cada cliente satisfecho, seguimos evolucionando hacia
             nuevos horizontes tecnológicos.
